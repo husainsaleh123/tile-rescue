@@ -1,0 +1,306 @@
+body{
+    background: linear-gradient(#2a2b39);
+}
+
+.welcome-screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 120px auto 30px;
+}
+
+.welcome-screen h1{
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    padding: 20px auto;
+    margin: auto;
+    font-family: "Inter", sans-serif; 
+    font-weight: 600;
+    letter-spacing: 1.75px;
+}
+
+.welcome-screen img{
+    height: 250px;
+    width: 220px;
+    margin-top: 15px;
+}
+
+.welcome-page-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-page-buttons button{
+    width: 300px;
+    height: 60px;
+    color: #2a2b39;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: 650;
+    font-family: "Inter", sans-serif; 
+    cursor: pointer;
+}
+
+
+.audio-settings{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: "Inter", sans-serif; 
+}
+
+
+.toggle {
+    position: relative;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    font-family: "Inter",sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.toggle input{
+    display: none;
+}
+
+.slider {
+    position: relative;
+    width: 45px;
+    height: 27px;
+    background-color: white;
+    border-radius: 30px;
+    transition: background-color 0.5s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 2.5px;
+    top: 3.5px;
+    background-color: #999;
+    border-radius: 50%;
+    transition: transform 0.5s;
+}
+
+
+
+.toggle input:checked + .slider {
+    background-color: #4564d5;
+}
+
+.toggle input:checked + .slider::before {
+  background-color: white;
+  transform: translateX(18px);
+}
+
+.toggle input:not(:checked) + .slider::before {
+  background-color: #999; /* gray knob */
+}
+
+
+.label-text {
+  color: white;
+}
+
+.high-score {
+    text-align: center;
+    font-family: "Inter",sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: white;
+    margin-top: 55px;
+
+}
+
+
+/* Styling the modal content */
+
+.instructions-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.modal-content {
+    position: relative;
+    background-color: #f1f1f1;
+    color: #2a2b39;
+    padding: 60px;
+    border-radius: 15px;
+    width: 500px;
+    max-width: 90%;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+    font-weight: 600;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+
+#closeBtn {
+    position: absolute;
+    top: 25px;
+    left: 55px;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(218, 15, 15);
+    border-radius: 25%;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;              /* Remove default padding */
+    line-height: 1;
+    box-shadow: 0 0 4px rgba(0,0,0,0.3); /* optional: subtle depth */
+}
+
+#closeBtn:hover {
+    background-color: rgb(134, 13, 13);  
+}
+
+.step-counter {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    font-size: 16px;
+    color: #909090;
+}
+
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+
+.modal-buttons button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: "Inter", sans-serif;
+    border: none;
+    border-radius: 8px;
+    background-color: #4e5d94;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.modal-buttons button:disabled {
+  background-color: #a5a5a5;
+  cursor: not-allowed;
+}
+
+
+.modal-buttons button:hover:not(:disabled) {
+    background-color: #6c7ab8;
+}
+
+
+/*Styling the countdown in the game page*/
+
+/* Countdown Fullscreen Overlay */
+#counter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); /* 80% black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Countdown Number */
+#countdownNum {
+  color: white;
+  font-size: 120px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  animation: pop 1s ease-in-out;
+}
+
+/*Game page styling*/
+
+    .game-title {
+        color: white;
+        font-family: "Inter", sans-serif;
+        text-align: center;
+        font-size: 60px;
+        font-weight: 600;
+        margin: 80px auto 50px;
+    }
+
+    .game-info {
+        color: white;
+        font-family: "Inter", sans-serif;
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 30px;
+        font-weight: 400;
+        margin: 20px auto 20px;
+    }
+
+    .tile-board {
+        margin: 60px auto 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .tile-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .tile {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      background-color: gray; /* Default placeholder */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .tile.red { 
+        background-color: #e74c3c; 
+    }
+
+    .tile.green { 
+        background-color: #27ae60; 
+    }
+    .tile.blue { 
+        background-color: #3498db; 
+    }

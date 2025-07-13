@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Rescue</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+
+
+<div class="instructions-modal" id="instructionsModal">
+  <div class="modal-content">
+    <button id="closeBtn" onclick="closeInstructions()">x</button>
+    
+    <span class="step-counter" id="stepCounter">1 / 2</span>
+    <p id="instructionText">
+      Tiles will appear to you row by row, you need to click the blue or green tiles while the grid moves down.
+    </p>
+
+    <div class="modal-buttons">
+      <button id="backBtn" disabled>Back</button>
+      <button id="nextBtn">Next</button>
+    </div>
+  </div>
+</div>
+
+
+<body>
+    <div class="welcome-screen">
+        <h1>Welcome to Tile Rescue!</h1>
+        <img src="images/tile-rescue.png" alt="centered-logo">
+    </div>
+
+    <div class="welcome-page-buttons">
+        <button onclick="location.href='game.html'">Start game</button>
+        <button onclick="openInstructions()">Instructions</button>
+    </div>
+
+   <div class="audio-settings">
+        <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+            <span class="label-text">🎶 Music</span>
+        </label>
+
+        <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+            <span class="label-text">🔊 Sound Effects</span>
+        </label>
+    </div>
+
+    <div class="high-score">
+        High score: <span id="high-score">0</span>
+    </div>
+</body>
+</html>
