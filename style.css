@@ -290,16 +290,27 @@ footer{
 
     /*Styles the game's tile board*/
     .tile-board {
-        display: grid;
-        grid-template-columns: repeat(5, 60px); /* 5 tiles per row */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        max-height: 400px;
+        overflow: hidden;
+        margin: 60px auto;
+    }
+
+        /*
+        grid-template-columns: repeat(5, 60px); 
         grid-auto-rows: 60px;
         height: 350px;;
         gap: 15px;
         margin: 50px auto 20px;
         max-width: max-content;
-        padding: 15px; /* optional: spacing inside */
+        padding: 15px; optional: spacing inside 
         border-radius: 10px;
-    }
+    }*/
+
 
     /*Styles the property of the tile itself*/
     .tile {
@@ -308,6 +319,12 @@ footer{
       border-radius: 10px;
       cursor: pointer;
       transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    .tile-row{
+        display: grid;
+        grid-template-columns: repeat(5, 60px);
+        gap: 15px;
     }
 
     /*Styling the red tiles color*/

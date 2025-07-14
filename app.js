@@ -86,34 +86,31 @@
 
     //The board javascript, inside the game.html page
     function generateTileRow() {
-      const redTileCount = Math.floor(Math.random() * (maxRedTiles - minRedTiles + 1)) + minRedTiles; //ensures 3-4 tiles in a row are red
+      const redTileCount = Math.floor(Math.random() * (maxRedTiles - minRedTiles + 1)) + minRedTiles;
       const tileTypes = [];
 
-      // Generating tile types
-      for (let i = 0; i < redTileCount; i++) tileTypes.push("red"); //generates the red tiles
-      while (tileTypes.length < tileCount) tileTypes.push(Math.random() < 0.5 ? "green" : "blue"); //generates the green and blue tiles
+      for (let i = 0; i < redTileCount; i++) tileTypes.push("red");
+      while (tileTypes.length < tileCount) tileTypes.push(Math.random() < 0.5 ? "green" : "blue");
 
-      // Shuffle the tiles and randomizes their distribution
+      // Shuffle
       for (let i = tileTypes.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); 
+        const j = Math.floor(Math.random() * (i + 1));
         [tileTypes[i], tileTypes[j]] = [tileTypes[j], tileTypes[i]];
       }
 
-      // Adding the tiles at the top of the grid using prepend
-      for (let i = tileTypes.length - 1; i >= 0; i--) {
-        const tile = document.createElement("div");
-        tile.classList.add("tile", tileTypes[i]);
-        board.insertBefore(tile, board.firstChild); // Insert at top
-      }
+      const row = document.createElement("div");
+      row.classList.add("tile-row");
 
-      // Removes the bottom row if the grid gets full with 5 rows
-      const maxRows = Math.floor(board.clientHeight / 75); // 75 = tile (60px) + gap (15px)
-      const maxTiles = maxRows * tileCount; 
-      while (board.children.length > maxTiles) {
-        board.removeChild(board.lastChild); //removes the bottom tile ow
-      }
+      tileTypes.forEach(type => {
+        const tile = document.createElement("div");
+        tile.classList.add("tile", type);
+        row.appendChild(tile);
+      });
+
+      board.insertBefore(row, board.firstChild); // Add to top (visually top = newer)
     }
-    
+
+
 
     //function handleTileClick event that enables the detection of the tiles and updating the score
 
@@ -145,7 +142,7 @@
       scoreDisplay.textContent = `Score: ${score}`; 
     }
 
-      function moveTilesUp() {
+    function moveTilesUp() {
           const rows = Array.from(board.querySelectorAll(".tile-row"));
           
           rows.forEach(row => {
@@ -157,36 +154,55 @@
                   board.removeChild(row); // Remove if it moved off-screen
               }
           });
-      }
+    }
 
 
       function checkMissedTiles(row) {
-          const tiles = row.querySelectorAll(".tile");
-          const missed = Array.from(tiles).some(tile => {
-            return !tile.classList.contains("clicked") && 
-                  (tile.classList.contains("green") || tile.classList.contains("blue"));
-          });
+        const tiles = row.querySelectorAll(".tile");
+        const missed = Array.from(tiles).some(tile => {
+          return !tile.classList.contains("clicked") && 
+                (tile.classList.contains("green") || tile.classList.contains("blue"));
+        });
 
-          if (missed) {
-            console.log("Missed correct tile(s) in this row — show trivia or reduce life.");
-            // You can call your trivia/question logic here
-          }
+        if (missed) {
+          console.log("Missed correct tile(s) in this row — show trivia or reduce life.");
+          redAudio.volume = 1.0;
+          redAudio.play();
         }
+      }
 
 
-    function startGameLoop() {
+      function startGameLoop() {
         gameInterval = setInterval(() => {
-        const newRow = generateTileRow();
-        board.appendChild(newRow);
-        moveTilesUp();
-              // Optionally increase speed over time
-              if (gameSpeed > 700) {
-                  gameSpeed -= 100;
-                  clearInterval(gameInterval); // Restart with new speed
-                  startGameLoop();             // Recursively restart
-              }
-          }, gameSpeed);
-        }
+          generateTileRow();
+
+          const rows = board.querySelectorAll(".tile-row");
+          const maxRows = 5;
+
+          if (rows.length > maxRows) {
+            const lastRow = rows[rows.length - 1];
+
+            const missed = Array.from(lastRow.children).some(tile =>
+              (tile.classList.contains("green") || tile.classList.contains("blue")) &&
+              !tile.classList.contains("clicked")
+            );
+
+            if (missed) {
+              redAudio.volume = 1.0;
+              redAudio.play();
+              console.log("Missed a green or blue tile!");
+            }
+
+            lastRow.remove();
+          }
+
+          if (gameSpeed > 700) {
+            gameSpeed -= 100;
+            clearInterval(gameInterval);
+            startGameLoop();
+          }
+        }, gameSpeed);
+      }
 
 
 
