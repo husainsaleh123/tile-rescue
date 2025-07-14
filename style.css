@@ -1,17 +1,21 @@
+
+
 body{
-    background: linear-gradient(#2a2b39);
+    background: linear-gradient(#2a2b39); /*Styling the background color*/
 }
 
+/*Styling the welcome screen*/
 .welcome-screen{
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Displays all the flex items in a column manner */
     justify-content: center;
     align-items: center;
-    margin: 120px auto 30px;
+    margin: 120px auto 30px; /*Adds space from the top of the page to the heading*/
 }
 
+/* Styling properties the h1 heading "Welcome to Tile Rescue!" */
 .welcome-screen h1{
-    font-size: 40px;
+    font-size: 40px; 
     color: white;
     text-align: center;
     padding: 20px auto;
@@ -21,12 +25,14 @@ body{
     letter-spacing: 1.75px;
 }
 
+/* Styling properties to the logo image I designed */
 .welcome-screen img{
     height: 250px;
     width: 220px;
     margin-top: 15px;
 }
 
+/* Styling properties for the LAYOUT of the welcome page buttons, the "Start Game" button AND the "Instructions", parent selector */ 
 .welcome-page-buttons{
     display: flex;
     flex-direction: row;
@@ -35,6 +41,7 @@ body{
     align-items: center;
 }
 
+/* Styling properties for the buttons themselves, the "Start Game" button AND the "Instructions" */ 
 .welcome-page-buttons button{
     width: 300px;
     height: 60px;
@@ -46,9 +53,9 @@ body{
     cursor: pointer;
 }
 
-
+/* Styling properties for the music and sound effects toogle selectors, parent selector */
 .audio-settings{
-    margin-top: 40px;
+    margin-top: 35px;
     display: flex;
     flex-direction: row;
     gap: 60px;
@@ -60,7 +67,7 @@ body{
     font-family: "Inter", sans-serif; 
 }
 
-
+/*Styles the toggle circle's layout*/
 .toggle {
     position: relative;
     display: flex;
@@ -71,10 +78,12 @@ body{
     cursor: pointer;
 }
 
+/*Removes the checkbox within the toggle and hides it from display*/
 .toggle input{
     display: none;
 }
 
+/*Styles the slider when it is unchecked*/
 .slider {
     position: relative;
     width: 45px;
@@ -84,6 +93,7 @@ body{
     transition: background-color 0.5s;
 }
 
+/*Styles the size properties that are within the slider if it is unchecked*/
 .slider::before {
     content: "";
     position: absolute;
@@ -91,44 +101,52 @@ body{
     width: 20px;
     left: 2.5px;
     top: 3.5px;
-    background-color: #999;
     border-radius: 50%;
     transition: transform 0.5s;
 }
 
-
-
+/*Styles the slider if it is checked*/
 .toggle input:checked + .slider {
     background-color: #4564d5;
 }
 
+/*Styles the circle that is within the slider if it is checked*/
 .toggle input:checked + .slider::before {
   background-color: white;
   transform: translateX(18px);
 }
 
+/*Styles the circle that is within the slider if it is unchecked*/
 .toggle input:not(:checked) + .slider::before {
-  background-color: #999; /* gray knob */
+  background-color: #999; /*the gray circle or knob*/
 }
 
-
+/*The color of the text labelling the toggle buttons: Music and Sound Effects*/
 .label-text {
   color: white;
 }
 
+/*Styles the high score display text after the audio settings*/
 .high-score {
     text-align: center;
     font-family: "Inter",sans-serif;
-    font-weight: 400;
-    font-size: 28px;
+    font-weight: 450;
+    font-size: 36px;
     color: white;
-    margin-top: 55px;
-
+    margin-top: 45px;
 }
 
+/*Styles the footer text*/
+footer{
+    font-family: "Inter",sans-serif;
+    font-size: 18px;
+    font-weight: 350;
+    margin: 100px auto;
+    text-align: center;
+    color: white;
+}
 
-/* Styling the modal content */
-
+/* Styling the transparent black background that appears once the instructions button is clicked */
 .instructions-modal {
     position: fixed;
     top: 0;
@@ -141,7 +159,7 @@ body{
     align-items: center;
 }
 
-
+/*Styles the modal box*/
 .modal-content {
     position: relative;
     background-color: #f1f1f1;
@@ -157,7 +175,7 @@ body{
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
-
+/*Styles the "x" button that closes the modal popup*/
 #closeBtn {
     position: absolute;
     top: 25px;
@@ -179,10 +197,12 @@ body{
     box-shadow: 0 0 4px rgba(0,0,0,0.3); /* optional: subtle depth */
 }
 
+/*Styles the hover of the "x" button that closes the modal popup*/
 #closeBtn:hover {
     background-color: rgb(134, 13, 13);  
 }
 
+/*Styles the step counter on the top right that shows the current step/10 */
 .step-counter {
     position: absolute;
     top: 25px;
@@ -191,14 +211,14 @@ body{
     color: #909090;
 }
 
-
+/*Styles the back and next button layout */
 .modal-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
 }
 
-
+/*Styles the colors of the next and back buttons */
 .modal-buttons button {
     padding: 10px 20px;
     font-size: 18px;
@@ -211,21 +231,15 @@ body{
     transition: background-color 0.3s;
 }
 
-
+/*Disables the functionality of the button if it is not selected */
 .modal-buttons button:disabled {
   background-color: #a5a5a5;
   cursor: not-allowed;
 }
 
-
-.modal-buttons button:hover:not(:disabled) {
-    background-color: #6c7ab8;
-}
-
-
 /*Styling the countdown in the game page*/
 
-/* Countdown Fullscreen Overlay */
+/* Black Countdown background Fullscreen Overlay */
 #counter {
   position: fixed;
   top: 0;
@@ -250,6 +264,7 @@ body{
 
 /*Game page styling*/
 
+    /*Styles the game title heading*/
     .game-title {
         color: white;
         font-family: "Inter", sans-serif;
@@ -259,6 +274,7 @@ body{
         margin: 80px auto 50px;
     }
 
+    /*Styles the game info specifically the score and the lives*/
     .game-info {
         color: white;
         font-family: "Inter", sans-serif;
@@ -272,35 +288,39 @@ body{
         margin: 20px auto 20px;
     }
 
+    /*Styles the game's tile board*/
     .tile-board {
-        margin: 60px auto 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(5, 60px); /* 5 tiles per row */
+        grid-auto-rows: 60px;
+        height: 350px;;
         gap: 15px;
+        margin: 50px auto 20px;
+        max-width: max-content;
+        padding: 15px; /* optional: spacing inside */
+        border-radius: 10px;
     }
 
-    .tile-row {
-        display: flex;
-        gap: 15px;
-    }
-
+    /*Styles the property of the tile itself*/
     .tile {
       width: 60px;
       height: 60px;
       border-radius: 10px;
-      background-color: gray; /* Default placeholder */
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: transform 0.2s ease, background-color 0.3s ease;
     }
 
+    /*Styling the red tiles color*/
     .tile.red { 
         background-color: #e74c3c; 
     }
-
+    
+    /*Styling the green tiles color*/
     .tile.green { 
         background-color: #27ae60; 
     }
+
+    /*Styling the blue tiles color*/
     .tile.blue { 
         background-color: #3498db; 
     }
