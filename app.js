@@ -43,10 +43,10 @@
             {
               question: "As of 2025, what's the world population (approx)?",
               options: ["6 Billion", "7 Billion", "8 Billion", "9 Billion"],
-              correct: "8B"
+              correct: "8 Billion"
             },
             {
-              question: "Who won the 2022 FIFA World Cup?",
+              question: "Which country won the 2022 FIFA World Cup?",
               options: ["France", "Argentina", "Brazil", "Germany"],
               correct: "Argentina"
             },
@@ -63,24 +63,50 @@
               correct: "2010"
             },
             {
-              question: "What is the name of the biggest Island in the world?",
-              options: ["Madagascar", "Australia", "2012", "2013"],
-              correct: "2010"
-            }
-          ],
-          hard: [
+              question: "What is the economic term for general increase of prices?",
+              options: ["Inflation", "Fluctuation", "Taxes", "Recession"],
+              correct: "Inflation"
+            },
+            {
+              question: "At what year did the Soviet Union collapse?",
+              options: ["1988", "1989", "1990", "1991"],
+              correct: "1991"
+            },
+            {
+              question: "What empire was ruled by Genghis Khan?",
+              options: ["Roman Empire", "Mongol Empire", "Chinese Empire", "Japanese Empire"],
+              correct: "Mongol Empire"
+            },
+             {
+              question: "Between which two countries does the dead sea lie?",
+              options: ["Palestine and Jordan", "Iraq and Jordan", "Syria and Jordan", "Lebanon and Jordan"],
+              correct: "Palestine and Jordan"
+            },  
+            {
+              question: "At what year did the Titanic ship sink?",
+              options: ["1910", "1912", "1914", "1918"],
+              correct: "1912"
+            },     
+            {
+              question: "What country is the biggest oil exporter?",
+              options: ["Kuwait", "Iraq", "Iran", "Saudi Arabia"],
+              correct: "Saudi Arabia"
+            },
             {
               question: "What is the square root of 289?",
               options: ["17", "18", "19", "20"],
               correct: "17"
-            },
+            },      
+          ],
+          hard: [
+ 
             {
               question: "Which country hosted the first world cup in 1930?",
               options: ["Italy", "Brazil", "Uruguay", "France"],
               correct: "Uruguay"
             },
              {
-              question: "Which social media platform was the first to reach 1B registered users?",
+              question: "Which social media platform was the first to reach 1 Billion registered users?",
               options: ["YouTube", "Instagram", "Facebook", "Twitter"],
               correct: "Facebook"
             },
@@ -94,7 +120,32 @@
               options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
               correct: "El Salvador"
             }
-            
+                {
+              question: "What is a main feature of capitalism?",
+              options: ["Price Control", "Central Planning", "Equal Distribution", "Private Ownership"],
+              correct: "Private Ownership"
+            },
+            {
+              question: "What is a common tool used by banks to control inflation",
+              options: ["Taxes", "Interest rates", "Tariffs", "Payable Loans"],
+              correct: "Interest rates"
+            },
+             {
+              question: "Which social media platform was the first to reach 1 Billion registered users?",
+              options: ["YouTube", "Instagram", "Facebook", "Twitter"],
+              correct: "Facebook"
+            },
+            {
+              question: "Which particle has no charge but significant mass?",
+              options: ["Proton", "Neutron", "Electron", "Positron"],
+              correct: "Neutron"
+            },
+            {
+              question: "Which country was the first to adapt Bitcoin as a legal tender?",
+              options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
+              correct: "El Salvador"
+            }
+
           ]
       };
 
@@ -136,11 +187,13 @@
       let triviaTimer; 
       let gamePaused = false;
       let currentTrivia = null;
-      let triviaAlreadyHandled = false;
+      let triviaHandler = false;
+
+
       function startTrivia(difficulty = 'easy') {
-      const modal = document.getElementById("triviaModal");
-      const timerSpan = document.getElementById("timerValue");
-      const closeBtn = document.querySelector(".close-trivia");
+        const modal = document.getElementById("triviaModal");
+        const timerSpan = document.getElementById("timerValue");
+        const closeBtn = document.querySelector(".close-trivia");
 
       const timeLimits = {
         easy: 10,
@@ -261,24 +314,24 @@
       tileDet.classList.add("clicked"); //Prevents double scoring
 
       if (tileDet.classList.contains("blue")){
+         if (lives <= 0) return; // Don't process blue if game is over
           score += 10;
           blueAudio.volume = 1.0;
           blueAudio.play();
 
       }else if (tileDet.classList.contains("green")){
+           if (lives <= 0) return; // Don't process green tile if game is over
           score += 20;
           greenAudio.volume = 1.0;
           greenAudio.play();
       }else if (tileDet.classList.contains("red")){
+          if (lives <= 0) return; // Don't process red tile if game is over
           redAudio.volume = 1.0;
           redAudio.play();
           showRandomTrivia(); // ← add this
 
           //pauses the game
           clearInterval(gameInterval)
-
-          // Show trivia modal
-          startTrivia("easy")
 
           return;
       }
@@ -337,9 +390,9 @@
               !tile.classList.contains("clicked")
             );
 
-            if (missed) {
+            if (missed && lives > 0 && !gamePaused) {
               redAudio.play();
-              showRandomTrivia(); // ✅ TRIGGER CORRECTLY
+              showRandomTrivia(); 
             }
 
             lastRow.remove();
@@ -356,20 +409,32 @@
 
 
       function showRandomTrivia() {
+          if (lives <= 0) return; // Prevent showing trivia if game is ove
           gamePaused = true;
 
           clearInterval(gameInterval);
           clearInterval(triviaTimer);
 
+          triviaHandler = false;
+
           const difficulties = ["easy", "medium", "hard"];
           const chosenDiff = difficulties[Math.floor(Math.random() * difficulties.length)];
           const questionSet = triviaQuestions[chosenDiff];
-          const questionObj = questionSet[Math.floor(Math.random() * questionSet.length)];
+          const usedSet = usedTrivia[chosenDiff];
 
-          if (!questionObj || !questionObj.question || !questionObj.options || !questionObj.correct) {
-            console.error("Invalid trivia question loaded");
-            return;
+          const availableQuestions = questionSet.filter(q => !usedSet.includes(q));
+
+          if (availableQuestions.length === 0) {
+            // All questions used for this difficulty — reset the used list
+            usedTrivia[chosenDiff] = [];
+            availableQuestions.push(...questionSet);
           }
+
+          const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+          const questionObj = availableQuestions[randomIndex];
+
+          // Mark as used
+          usedTrivia[chosenDiff].push(questionObj);
 
           // Store current question
           currentTrivia = questionObj;
@@ -380,7 +445,7 @@
           const modal = document.getElementById("triviaModal");
           modal.style.display = "flex";
 
-          document.getElementById("triviaQuestion").textContent = `[${chosenDiff.toUpperCase()}] ${questionObj.question}`;
+          document.getElementById("triviaQuestion").textContent = `${questionObj.question}`;
           const optionsContainer = document.getElementById("triviaOptions");
           optionsContainer.innerHTML = "";
 
@@ -394,6 +459,9 @@
             btn.textContent = option;
 
             btn.onclick = () => {
+              if (triviaHandler) return;
+              triviaHandler = true;
+
               clearInterval(triviaTimer);
 
               // Disable all buttons
@@ -438,7 +506,13 @@
             timeLeft--;
             timerDisplay.textContent = timeLeft;
 
-            if (timeLeft <= 0) {
+            if (timeLeft < 0){
+              timeLeft = 0; //clamps the time left to 0 so that it does not display negative
+            }
+
+            if (timeLeft <= 0 && !triviaHandler) {
+              triviaHandler = true;
+
               clearInterval(triviaTimer);
               timerDisplay.textContent = "0";
 
@@ -452,7 +526,7 @@
               });
 
               // Deduct a life
-              lives--;
+              if (lives > 0) lives--;
               updateLivesUI();
 
               // Enable close button
@@ -478,6 +552,14 @@
 
 
       function resumeGameAfterTrivia() {
+          if (lives <= 0){
+              const modal = document.getElementById("triviaModal");
+              modal.style.display = "none";
+              clearInterval(triviaTimer);
+              board.innerHTML = ""; // Clear board
+              return;
+          }
+
             const modal = document.getElementById("triviaModal");
             modal.style.display = "none";
 
@@ -510,13 +592,15 @@
                 clearInterval(countdownInterval);
                 counterOverlay.style.display = "none";
 
-                // ✅ Clear the board
+                // Clear the board
                 board.innerHTML = "";
 
-                // ✅ Resume game
+                // Resume game
                 gamePaused = false;
                 startGameLoop();
               }
+
+              if (lives <= 0) return; //  Don't resume game if player is out of lives
             }, 1000);
           }
 
