@@ -22,33 +22,74 @@
             },
             {
               question: "What is the capital of Spain?",
-              options: ["Rome", "Madrid", "Paris", "Lisbon"],
+              options: ["Sevilla", "Madrid", "Barcelona", "Bilbao"],
               correct: "Madrid"
-            }
-          ],
-          medium: [
+            },
+            {
+              question: "What is the name of the longest river in the world?",
+              options: ["The Amazon River", "The Nile River", "The Mississippi River", "Yellow River"],
+              correct: "The Nile River"
+            },
             {
               question: "In what year did Bahrain gain independence?",
               options: ["1970", "1971", "1973", "1975"],
               correct: "1971"
             },
             {
+              question: "What is the name of the first American president?",
+              options: ["Abraham Lincoln", "John Kennedy", "Richard Nexon", "George Washington"],
+              correct: "George Washington"
+            },
+            {
+              question: "As of 2025, what's the world population (approx)?",
+              options: ["6 Billion", "7 Billion", "8 Billion", "9 Billion"],
+              correct: "8B"
+            },
+            {
               question: "Who won the 2022 FIFA World Cup?",
               options: ["France", "Argentina", "Brazil", "Germany"],
               correct: "Argentina"
-            }
+            },
+            {
+              question: "Which American state has been bought from the Soviet Union?",
+              options: ["Montana", "Hawaii", "North Dakota", "Alaska"],
+              correct: "Alaska"
+            },
+          ],
+          medium: [
+            {
+              question: "What year was Instagram found?",
+              options: ["2010", "2011", "2012", "2013"],
+              correct: "2010"
+            },
           ],
           hard: [
-            {
-              question: "As of 2025, what's the world population (approx)?",
-              options: ["6B", "7B", "8B", "9B"],
-              correct: "8B"
-            },
             {
               question: "What is the square root of 289?",
               options: ["17", "18", "19", "20"],
               correct: "17"
+            },
+            {
+              question: "Which country hosted the first world cup in 1930?",
+              options: ["Italy", "Brazil", "Uruguay", "France"],
+              correct: "Uruguay"
+            },
+             {
+              question: "Which social media platform was the first to reach 1B registered users?",
+              options: ["YouTube", "Instagram", "Facebook", "Twitter"],
+              correct: "Facebook"
+            },
+            {
+              question: "Which particle has no charge but significant mass?",
+              options: ["Proton", "Neutron", "Electron", "Positron"],
+              correct: "Neutron"
+            },
+            {
+              question: "Which country was the first to adapt Bitcoin as a legal tender?",
+              options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
+              correct: "El Salvador"
             }
+            
           ]
       };
 
@@ -303,13 +344,12 @@
       }
 
 
-
       function showRandomTrivia() {
           gamePaused = true;
-          
+
           clearInterval(gameInterval);
           clearInterval(triviaTimer);
-          
+
           const difficulties = ["easy", "medium", "hard"];
           const chosenDiff = difficulties[Math.floor(Math.random() * difficulties.length)];
           const questionSet = triviaQuestions[chosenDiff];
@@ -330,10 +370,13 @@
           modal.style.display = "flex";
 
           document.getElementById("triviaQuestion").textContent = `[${chosenDiff.toUpperCase()}] ${questionObj.question}`;
-
           const optionsContainer = document.getElementById("triviaOptions");
           optionsContainer.innerHTML = "";
 
+          const timerDisplay = document.getElementById("timerValue");
+          timerDisplay.textContent = timeLeft;
+
+          // Create options
           questionObj.options.forEach(option => {
             const btn = document.createElement("button");
             btn.classList.add("option");
@@ -342,7 +385,7 @@
             btn.onclick = () => {
               clearInterval(triviaTimer);
 
-              // Disable all buttons to prevent multiple clicks
+              // Disable all buttons
               const allButtons = document.querySelectorAll(".option");
               allButtons.forEach(b => b.disabled = true);
 
@@ -355,7 +398,7 @@
                 lives--;
                 updateLivesUI();
 
-                // Highlight the correct one too
+                // Highlight correct one too
                 allButtons.forEach(b => {
                   if (b.textContent === questionObj.correct) {
                     b.style.backgroundColor = "#4CAF50";
@@ -363,35 +406,53 @@
                 });
               }
 
-              // Slight delay before resuming to show the colors
+              // Enable close button
+              const closeBtn = document.querySelector(".close-trivia");
+              closeBtn.style.pointerEvents = "auto";
+              closeBtn.style.opacity = "1";
+
               setTimeout(resumeGameAfterTrivia, 1000);
             };
 
             optionsContainer.appendChild(btn);
           });
 
+          // Disable close button initially
           const closeBtn = document.querySelector(".close-trivia");
           closeBtn.style.pointerEvents = "none";
           closeBtn.style.opacity = "0.4";
 
-          const timerDisplay = document.getElementById("timerValue");
-          timerDisplay.textContent = timeLeft;
-
+          // Timer countdown
           triviaTimer = setInterval(() => {
             timeLeft--;
             timerDisplay.textContent = timeLeft;
-            
-          if (timeLeft <= 0) {
-          clearInterval(triviaTimer);
-          if (!triviaAlreadyHandled) {
-            lives--;
-            updateLivesUI();
-            triviaAlreadyHandled = true;
-          }
-            resumeGameAfterTrivia();
-          }
-              }, 1000);
+
+            if (timeLeft <= 0) {
+              clearInterval(triviaTimer);
+              timerDisplay.textContent = "0";
+
+              // Highlight correct answer
+              const allButtons = document.querySelectorAll(".option");
+              allButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === questionObj.correct) {
+                  btn.style.backgroundColor = "#4CAF50"; // Correct answer
+                }
+              });
+
+              // Deduct a life
+              lives--;
+              updateLivesUI();
+
+              // Enable close button
+              closeBtn.style.pointerEvents = "auto";
+              closeBtn.style.opacity = "1";
+
+              // Resume after short delay
+              setTimeout(resumeGameAfterTrivia, 1500);
             }
+          }, 1000);
+        }
 
 
       function updateLivesUI() {
@@ -403,7 +464,6 @@
       function closeTriviaModal() {
           resumeGameAfterTrivia()
       }
-
 
 
       function resumeGameAfterTrivia() {
