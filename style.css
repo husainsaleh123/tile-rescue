@@ -145,7 +145,7 @@ html, body {
     font-weight: 450;
     font-size: 36px;
     color: white;
-    margin-top: 45px;
+    margin-top: 60px;
 }
 
 /*Styles the footer text*/
@@ -354,3 +354,101 @@ footer{
     .tile.blue { 
         background-color: #3498db; 
     }
+
+
+    /*Trivia styling*/
+
+    /*
+    .trivia-modal{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #f1f1f1;
+        
+        justify-content: center;
+        align-items: center;
+        margin: 40px auto;
+    }*/
+
+    .trivia-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.75); /* black with 80% opacity */
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .trivia-box{
+        position: relative;
+        background-color: #f1f1f1;
+        padding: 40px;
+        border-radius: 10px;
+        width: 550px;
+        max-width: 80%;
+        font-family: "Inter", sans-serif;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .trivia-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .close-trivia{
+        font-size: 24px;
+        cursor: pointer;
+        color: #cd1400;
+    }
+
+    .trivia-question {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #2a2b39;
+    }
+
+
+    .trivia-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px 30px;
+    }
+
+
+    .trivia-options .option {
+    background-color: #4e5d94;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
+
+    .trivia-options .option{
+        background-color: #627ee1;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+
+.trivia-options .option:hover {
+  background-color: #39457a;
+}

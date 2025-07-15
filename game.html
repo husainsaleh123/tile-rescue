@@ -10,7 +10,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
+
+
 <body>
+
+    
+    <!-----------Trivia box styling------------->
+    <div class="trivia-modal" id="triviaModal">
+        <div class="trivia-box">
+            <div class="trivia-header">
+                <span class="close-trivia" onclick="closeTriviaModal()">&times;</span>
+                <div id="triviaTimer">⏲️ Timer: <span id="timerValue">0</span>s</div>
+            </div>
+
+        
+            <p id="triviaQuestion">What is the capital city of France?</p>
+
+            <div class="trivia-options" div id="triviaOptions">
+                <button class="option">A. Paris</button>
+                <button class="option">C. Rome</button>
+                <button class="option">B. Madrid</button>
+                <button class="option">D. Berlin</button>
+            </div>
+        </div>
+    </div>
+
+
     <!--Countdown-->
     <div id="counter">
         <div id="countdownNum">3</div>
