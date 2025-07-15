@@ -7,7 +7,7 @@
           "The green tiles are worth 20 points, meanwhile the blue tiles are worth 10 points.",
           "The speed of the grid will increase as the round progresses.",
           "If you fail to click the right tiles after the row has left the grid, or click the red tile, you get a chance to answer a random trivia question to save yourself.",
-          "Trivia questions have three categories - Easy: 10 seconds (15 points), Medium: 20 seconds (30 points), and Hard: 30 seconds  (45 points).",
+          "Trivia questions have three categories - Easy: 15 seconds (15 points), Medium: 22 seconds (30 points), and Hard: 30 seconds  (45 points).",
           "If you answer 5 trivia questions correctly in a row, you win an extra life.",
           "The speed will reset to its original once you lose a life.",
           "Enjoy the game, take it easy!",
@@ -36,7 +36,7 @@
               correct: "The Nile River"
             },
             {
-              question: "In what year did Bahrain gain independence?",
+              question: "In what year did Bahrain gain independence from the United Kingdom?",
               options: ["1970", "1971", "1973", "1975"],
               correct: "1971"
             },
@@ -65,13 +65,18 @@
               options: ["Montana", "Hawaii", "North Dakota", "Alaska"],
               correct: "Alaska"
             },
-          ],
-          medium: [
             {
               question: "What nutrient is mainly found in fish?",
               options: ["Carbohydrate", "Protein", "Fat", "Fiber"],
               correct: "Protein"
             },
+            {
+              question: "What does the term phobia mean?",
+              options: ["A dream disorder", "A memory problem", "An irrational fear", "Severe depression and anxiety"],
+              correct: "An irrational fear"
+            }, 
+          ],
+          medium: [
             {
               question: "What year was Instagram found?",
               options: ["2010", "2011", "2012", "2013"],
@@ -81,6 +86,11 @@
               question: "What is the economic term for general increase of prices?",
               options: ["Inflation", "Fluctuation", "Taxes", "Recession"],
               correct: "Inflation"
+            },
+            {
+              question: "Which of the following countries has nuclear weapons?",
+              options: ["Iran", "North Korea", "Cuba", "Turkey"],
+              correct: "North Korea"
             },
             {
               question: "At what year did the Soviet Union collapse?",
@@ -138,6 +148,11 @@
               correct: "Hierachy of Needs"
             },
             {
+              question: "What is the name of the famous drug-lord who escaped prison and went in hiding for 13 years?",
+              options: ["Pablo  Escobar", "Joaquín 'El Chapo' Guzmán", "Arturo Beltran Leyva", "Miguel Gallardo"],
+              correct: "Joaquín 'El Chapo' Guzmán"
+            },
+            {
               question: "What is the main difference between a debit card and a credit card?",
               options: ["Debit cards allow you to borrow money from the bank.", "Credit cards have no spending limit.", "Debit cards use your own money, credit cards allow you to borrow money from the bank.", "None of the above."],
               correct: "Debit cards use your own money, credit cards allow you to borrow money from the bank."
@@ -147,22 +162,22 @@
               options: ["Pancreas", "Kidney", "Liver", "Large Intestine"],
               correct: "Pancreas"
             },
+                        {
+              question: "Which social media platform was the first to reach 1 Billion registered users?",
+              options: ["YouTube", "Instagram", "Facebook", "Twitter"],
+              correct: "Facebook"
+            },
             {
-              question: "What does the term phobia mean?",
-              options: ["A dream disorder", "A memory problem", "An irrational fear", "Severe depression and anxiety"],
-              correct: "An irrational fear"
-            },                   
+              question: "What is gluten found in?",
+              options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
+              correct: "Wheat"
+            },                  
           ],
           hard: [
             {
               question: "Which country hosted the first world cup in 1930?",
               options: ["Italy", "Brazil", "Uruguay", "France"],
               correct: "Uruguay"
-            },
-             {
-              question: "Which social media platform was the first to reach 1 Billion registered users?",
-              options: ["YouTube", "Instagram", "Facebook", "Twitter"],
-              correct: "Facebook"
             },
             {
               question: "Which particle has no charge but significant mass?",
@@ -178,8 +193,8 @@
               question: "Which country was the first to adapt Bitcoin as a legal tender?",
               options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
               correct: "El Salvador"
-            }
-                {
+            },
+            {
               question: "What is a main feature of capitalism?",
               options: ["Price Control", "Central Planning", "Equal Distribution", "Private Ownership"],
               correct: "Private Ownership"
@@ -192,7 +207,7 @@
             {
               question: "As of 2025, which nation is ranked as the world's most corrupt country?",
               options: ["South Sudan", "Syria", "Somalia", "Venezuela"],
-              correct: "Greenland"
+              correct: "South Sudan"
             },
              {
               question: "As of 2025, what is the world's most populous country?",
@@ -212,7 +227,7 @@
             {
               question: "What part of the brain is responsible for emotional responses?",
               options: ["Frontal Lobe", "Amygdala", "Pons", "Pariental Lobe"],
-              correct: "Greenland"
+              correct: "Amygdala"
             },
             {
               question: "When it comes to finance, what does liquidity mean?",
@@ -284,8 +299,8 @@
         const closeBtn = document.querySelector(".close-trivia");
 
       const timeLimits = {
-        easy: 10,
-        medium: 20,
+        easy: 15,
+        medium: 22,
         hard: 30
       };
 
@@ -527,7 +542,7 @@
           // Store current question
           currentTrivia = questionObj;
 
-          let timeLimit = chosenDiff === "medium" ? 20 : chosenDiff === "hard" ? 30 : 10;
+          let timeLimit = chosenDiff === "medium" ? 22 : chosenDiff === "hard" ? 30 : 15;
           let timeLeft = timeLimit;
 
           const modal = document.getElementById("triviaModal");
