@@ -62,6 +62,11 @@
               options: ["2010", "2011", "2012", "2013"],
               correct: "2010"
             },
+            {
+              question: "What is the name of the biggest Island in the world?",
+              options: ["Madagascar", "Australia", "2012", "2013"],
+              correct: "2010"
+            }
           ],
           hard: [
             {
@@ -91,6 +96,12 @@
             }
             
           ]
+      };
+
+      const usedTrivia = {
+            easy: [],
+            medium: [],
+            hard: []
       };
 
       const instructionText = document.getElementById("instructionText");
