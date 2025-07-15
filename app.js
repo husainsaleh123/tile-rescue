@@ -244,11 +244,6 @@
               options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
               correct: "Wheat"
             },
-            {
-              question: "What is the largest Island in the world?",
-              options: ["Papua New Guinea", "Greenland", "Madagascar", "Borneo"],
-              correct: "Greenland"
-            },
           ]
       };
 
@@ -291,6 +286,7 @@
       let gamePaused = false;
       let currentTrivia = null;
       let triviaHandler = false;
+      let correctStreak = 0;
 
 
       function startTrivia(difficulty = 'easy') {
@@ -525,7 +521,9 @@
           const questionSet = triviaQuestions[chosenDiff];
           const usedSet = usedTrivia[chosenDiff];
 
-          const availableQuestions = questionSet.filter(q => !usedSet.includes(q));
+          const availableQuestions = questionSet.filter(q => 
+            !usedSet.some(used => used.question === q.question)
+          );
 
           if (availableQuestions.length === 0) {
             // All questions used for this difficulty — reset the used list
@@ -575,6 +573,15 @@
                 btn.style.backgroundColor = "#4CAF50"; // Green for correct
                 score += chosenDiff === "easy" ? 15 : chosenDiff === "medium" ? 30 : 45;
                 scoreDisplay.textContent = `Score: ${score}`;
+
+                correctStreak++;
+
+                if (correctStreak === 5){
+                  lives++;
+                  correctStreak = 0;
+                  updateLivesUI();
+                }
+
               } else {
                 btn.style.backgroundColor = "#f44336"; // Red for wrong
                 lives--;
