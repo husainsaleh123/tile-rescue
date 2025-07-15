@@ -26,6 +26,11 @@
               correct: "Madrid"
             },
             {
+              question: "What is considered the best source of calcium?",
+              options: ["Meat", "Rice", "Milk", "Bread"],
+              correct: "Milk"
+            },
+            {
               question: "What is the name of the longest river in the world?",
               options: ["The Amazon River", "The Nile River", "The Mississippi River", "Yellow River"],
               correct: "The Nile River"
@@ -46,6 +51,11 @@
               correct: "8 Billion"
             },
             {
+              question: "What food group does rice belong to?",
+              options: ["Dairy", "Grains", "Vegetables", "Protein"],
+              correct: "Grains"
+            },
+            {
               question: "Which country won the 2022 FIFA World Cup?",
               options: ["France", "Argentina", "Brazil", "Germany"],
               correct: "Argentina"
@@ -57,6 +67,11 @@
             },
           ],
           medium: [
+            {
+              question: "What nutrient is mainly found in fish?",
+              options: ["Carbohydrate", "Protein", "Fat", "Fiber"],
+              correct: "Protein"
+            },
             {
               question: "What year was Instagram found?",
               options: ["2010", "2011", "2012", "2013"],
@@ -77,6 +92,16 @@
               options: ["Roman Empire", "Mongol Empire", "Chinese Empire", "Japanese Empire"],
               correct: "Mongol Empire"
             },
+            {
+              question: "Which continent has the most number of countries?",
+              options: ["Asia", "Africa", "Europe", "North America"],
+              correct: "Africa"
+            },
+            {
+              question: "Which food is considered high in Vitamin C?",
+              options: ["Orange", "Carrot", "Banana", "Tomato"],
+              correct: "Orange"
+            },         
              {
               question: "Between which two countries does the dead sea lie?",
               options: ["Palestine and Jordan", "Iraq and Jordan", "Syria and Jordan", "Lebanon and Jordan"],
@@ -86,7 +111,17 @@
               question: "At what year did the Titanic ship sink?",
               options: ["1910", "1912", "1914", "1918"],
               correct: "1912"
-            },     
+            },
+            {
+              question: "What does the 'Big Five' model describe?",
+              options: ["Mental Disorders", "IQ level", "Personality traits", "Memory strength"],
+              correct: "Personality traits"
+            },   
+            {
+              question: "What mineral is the most abundant in bananas?",
+              options: ["Iron", "Calcium", "Magnesium", "Potassium"],
+              correct: "Potassium"
+            },    
             {
               question: "What country is the biggest oil exporter?",
               options: ["Kuwait", "Iraq", "Iran", "Saudi Arabia"],
@@ -96,10 +131,29 @@
               question: "What is the square root of 289?",
               options: ["17", "18", "19", "20"],
               correct: "17"
-            },      
+            },
+            {
+              question: "What is Maslow well-known for?",
+              options: ["IQ Testing", "MBTI personality test", "Hierachy of Needs", "Commander in World War II"],
+              correct: "Hierachy of Needs"
+            },
+            {
+              question: "What is the main difference between a debit card and a credit card?",
+              options: ["Debit cards allow you to borrow money from the bank.", "Credit cards have no spending limit.", "Debit cards use your own money, credit cards allow you to borrow money from the bank.", "None of the above."],
+              correct: "Debit cards use your own money, credit cards allow you to borrow money from the bank."
+            },
+            {
+              question: "What organ is responsible for producing insulin?",
+              options: ["Pancreas", "Kidney", "Liver", "Large Intestine"],
+              correct: "Pancreas"
+            },
+            {
+              question: "What does the term phobia mean?",
+              options: ["A dream disorder", "A memory problem", "An irrational fear", "Severe depression and anxiety"],
+              correct: "An irrational fear"
+            },                   
           ],
           hard: [
- 
             {
               question: "Which country hosted the first world cup in 1930?",
               options: ["Italy", "Brazil", "Uruguay", "France"],
@@ -116,6 +170,11 @@
               correct: "Neutron"
             },
             {
+              question: "Which cooking oil is considered to be healthiest for the heart?",
+              options: ["Palm oil", "Butter", "Olive Oil", "Vegetable oil"],
+              correct: "Olive Oil"
+            },
+            {
               question: "Which country was the first to adapt Bitcoin as a legal tender?",
               options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
               correct: "El Salvador"
@@ -130,22 +189,51 @@
               options: ["Taxes", "Interest rates", "Tariffs", "Payable Loans"],
               correct: "Interest rates"
             },
+            {
+              question: "As of 2025, which nation is ranked as the world's most corrupt country?",
+              options: ["South Sudan", "Syria", "Somalia", "Venezuela"],
+              correct: "Greenland"
+            },
              {
-              question: "Which social media platform was the first to reach 1 Billion registered users?",
-              options: ["YouTube", "Instagram", "Facebook", "Twitter"],
-              correct: "Facebook"
+              question: "As of 2025, what is the world's most populous country?",
+              options: ["India", "China", "United States", "Russia"],
+              correct: "India"
             },
             {
-              question: "Which particle has no charge but significant mass?",
-              options: ["Proton", "Neutron", "Electron", "Positron"],
-              correct: "Neutron"
+              question: "What is the storage form of glucose in animals?",
+              options: ["Cellulose", "Fructose", "Lactose", "Glycogen"],
+              correct: "Glycogen"
             },
             {
-              question: "Which country was the first to adapt Bitcoin as a legal tender?",
-              options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
-              correct: "El Salvador"
-            }
-
+              question: "Which African country is the first in history to reach the FIFA World Cup semi-finals?",
+              options: ["Ghana", "Nigeria", "Morocco", "Algeria"],
+              correct: "Morocco"
+            },
+            {
+              question: "What part of the brain is responsible for emotional responses?",
+              options: ["Frontal Lobe", "Amygdala", "Pons", "Pariental Lobe"],
+              correct: "Greenland"
+            },
+            {
+              question: "When it comes to finance, what does liquidity mean?",
+              options: ["How much an asset depreciates.", "Ability of a firm to meet it's long-term obligations.", "Profitability of an asset over time.", "How easy an asset can be converted to cash."],
+              correct: "How easy an asset can be converted to cash."
+            },
+            {
+              question: "What is the largest Island in the world?",
+              options: ["Papua New Guinea", "Greenland", "Madagascar", "Borneo"],
+              correct: "Greenland"
+            },
+            {
+              question: "What is gluten found in?",
+              options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
+              correct: "Wheat"
+            },
+            {
+              question: "What is the largest Island in the world?",
+              options: ["Papua New Guinea", "Greenland", "Madagascar", "Borneo"],
+              correct: "Greenland"
+            },
           ]
       };
 
