@@ -271,7 +271,7 @@
       const rowHeight = 75; // 60px tile + 15px gap
       const greenAudio = new Audio("audio/green.mp3");
       const redAudio = new Audio("audio/red.mp3");
-      const blueAudio = new Audio("audio/blue.mp3")
+      const blueAudio = new Audio("audio/blue.mp3");
       const triviaModal = document.querySelector(".trivia-modal");
 
 
@@ -525,7 +525,7 @@
       function startGameLoop() {
         if (gamePaused || lives <= 0) return;
         clearTimeout(gameLoopTimeout);
-        backgroundMusic.volume = 0.2;
+        backgroundMusic.volume = 0.25;
         backgroundMusic.play();
         gameLoop();
       }
@@ -698,9 +698,19 @@
               const modal = document.getElementById("triviaModal");
               modal.style.display = "none";
               clearInterval(triviaTimer);
+              clearInterval(gameTimerInterval); //this will stop the timer when the player loses
               board.innerHTML = ""; // Clear board
+
+              if (score > getHighScore()){
+                  setHighScore(score);
+                  updateHighScoreUI();
+             }
+
+              gameOver();
+
               return;
           }
+
 
             const modal = document.getElementById("triviaModal");
             modal.style.display = "none";
@@ -748,7 +758,8 @@
 
 
           function startGameTimer() {
-              startTime = Date.now(); // Record start time
+            if (lives > 0){
+               startTime = Date.now(); // Record start time
               const timerDisplay = document.getElementById("time");
 
               gameTimerInterval = setInterval(() => {
@@ -761,7 +772,53 @@
 
                 timerDisplay.textContent = `${minutes}:${seconds}`;
               }, 1000);
+            }
           }
+
+          function getHighScore() {
+              return parseInt(localStorage.getItem("highScore")) || 0;
+          }
+
+          function updateHighScoreUI() {
+              const highScoreDisplay = document.getElementById("highScore");
+              if (highScoreDisplay) {
+                highScoreDisplay.textContent = getHighScore();
+              }
+          }
+
+          function setHighScore(newScore) {
+               localStorage.setItem("highScore", newScore.toString());
+          }
+
+          function gameOver(){
+            gamePaused = true;
+
+            clearTimeout(gameLoopTimeout);
+            clearInterval(triviaTimer);
+            clearInterval(gameTimerInterval);
+
+            const ending = document.getElementById("gameOver");
+            ending.style.display = "flex";
+
+            const timerDisplay = document.getElementById("end-time");
+            const scoreDisplay = document.getElementById("end-score");
+            const highScoreDisplay = document.getElementById("end-highscore");
+
+            timerDisplay.textContent = `Time Played: ${document.getElementById("time").textContent}`;
+            scoreDisplay.textContent = `Your Score: ${score}`;
+            highScoreDisplay.textContent = `High Score: ${getHighScore()}`;
+          }
+
+            // Restart the game — reset vars & start fresh or reload page
+            function restartRound() {
+              // You can reset your variables or just reload the page to restart
+              window.location.reload();
+            }
+
+            // Main menu button
+            function goToMainMenu() {
+              window.location.href = "index.html";
+            }
 
 //<--------------------------Event listeners---------------------------->
 
@@ -785,6 +842,11 @@ nextBtn.addEventListener("click", () => {
     updateInstruction(); //Initialize on load
   }
 
+document.addEventListener("DOMContentLoaded", () => {
+  updateHighScoreUI(); // Ensures it runs after DOM is ready
+});
+
+
 //Plays the music toggle
 if (musicToggle) {
     musicToggle.addEventListener("click", (evt) => {
@@ -803,3 +865,19 @@ if (sfxToggle) {
 
 startCountdown();
 board.addEventListener("click", handleTileClick);
+
+
+if (score > getHighScore()) {
+  setHighScore(score);
+  updateHighScoreUI();
+}
+
+
+// Attach listeners to buttons after DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  const restartBtn = document.getElementById("restartBtn");
+  const mainMenuBtn = document.getElementById("mainMenuBtn");
+
+  if (restartBtn) restartBtn.addEventListener("click", restartRound);
+  if (mainMenuBtn) mainMenuBtn.addEventListener("click", goToMainMenu);
+});

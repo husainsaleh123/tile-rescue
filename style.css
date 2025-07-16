@@ -449,6 +449,63 @@ footer{
     }
 
 
-.trivia-options .option:hover {
-  background-color: #39457a;
-}
+    .trivia-options .option:hover {
+        background-color: #39457a;
+    }
+
+
+/*Styling the game over part*/
+
+    .gameOver{
+        position: fixed;
+        display: none;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(2, 0, 13, 0.9);
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        color: white;
+        font-family: "Inter", sans-serif;
+    }
+
+    .end-stats h1 {
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 40px;
+        color: white;
+    }
+
+    .end-stats p {
+        text-align: left;
+        font-size: 24px;
+        margin: 8px 0;
+        color: white;
+        line-height: 1.5;
+    }
+
+    .game-over-btns {
+        display: flex;
+        margin-top: 30px;
+        gap: 10px;
+    }
+
+    .game-over-btns button{
+        padding: 15px 25px;
+        font-size: 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-family: "Inter",sans-serif;
+        cursor: pointer;
+        background-color: white;
+        color:#000000;
+        transition: background-color 0.2s ease;
+    }
+
+    .game-over-btns button:hover {
+        background-color: rgb(202, 202, 202) ;
+    }
