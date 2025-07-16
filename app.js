@@ -293,6 +293,9 @@
       let gameSpeedController = null;
       let startTime = null;
       let timeInterval = null;
+      let musicEnabled = musicToggle ? musicToggle.checked : true;
+      let sfxEnabled = true;
+
 
       function startTrivia(difficulty = 'easy') {
         const modal = document.getElementById("triviaModal");
@@ -382,6 +385,31 @@
   }
 
 
+    //Background music playing function
+    function playBackgroundMusic(){
+        if(!musicEnabled) return;
+
+        backgroundMusic.volume = 0.25;
+        backgroundMusic.loop = true;
+        backgroundMusic.play();
+    }
+
+    // Function to handle music toggle changes
+    function handleMusicToggle() {
+      musicEnabled = musicToggle.checked;
+      if (musicEnabled) {
+        playBackgroundMusic();
+      } else {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Function to handle sfx toggle changes
+    function handleSfxToggle() {
+      sfxEnabled = sfxToggle.checked;
+      // No immediate action needed here, since sfx play is conditional on sfxEnabled
+    }
+
     //The board javascript, inside the game.html page
     function generateTileRow() {
       const redTileCount = Math.floor(Math.random() * (maxRedTiles - minRedTiles + 1)) + minRedTiles;
@@ -425,18 +453,29 @@
       if (tileDet.classList.contains("blue")){
          if (lives <= 0) return; // Don't process blue if game is over
           score += 10;
-          blueAudio.volume = 1.0;
-          blueAudio.play();
+
+          if (sfxEnabled){
+              blueAudio.volume = 1.0;
+              blueAudio.play();
+          }
 
       }else if (tileDet.classList.contains("green")){
            if (lives <= 0) return; // Don't process green tile if game is over
           score += 20;
-          greenAudio.volume = 1.0;
-          greenAudio.play();
+
+          if (sfxEnabled){
+              greenAudio.volume = 1.0;
+              greenAudio.play();
+          }
+
       }else if (tileDet.classList.contains("red")){
           if (lives <= 0) return; // Don't process red tile if game is over
-          redAudio.volume = 1.0;
-          redAudio.play();
+          
+          if (sfxEnabled){
+              redAudio.volume = 1.0;
+              redAudio.play();
+          }
+
           showRandomTrivia(); // ← add this
 
           //pauses the game
@@ -499,9 +538,6 @@
         function gameLoop() {
           if (gamePaused || lives <= 0) return;
 
-          backgroundMusic.volume = 0.25;
-          backgroundMusic.play();
-
           generateTileRow();
 
           const rows = board.querySelectorAll(".tile-row");
@@ -528,8 +564,7 @@
       function startGameLoop() {
         if (gamePaused || lives <= 0) return;
         clearTimeout(gameLoopTimeout);
-        backgroundMusic.volume = 0.25;
-        backgroundMusic.play();
+        playBackgroundMusic();
         gameLoop();
       }
 
@@ -852,9 +887,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("click", function initAudioOnce() {
-  backgroundMusic = 0.25;
-  backgroundMusic.play();
-  document.removeEventListener("click", initAudioOnce);
+     //playBackgroundMusic();
+     if (musicEnabled){
+      playBackgroundMusic();
+     }
+     document.removeEventListener("click", initAudioOnce);
 });
 
 
@@ -863,26 +900,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+// Attach event listeners after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  updateHighScoreUI(); // existing line
+  if (musicToggle) {
+    musicToggle.addEventListener("change", handleMusicToggle);
+  }
+  if (sfxToggle) {
+    sfxToggle.addEventListener("change", handleSfxToggle);
+  }
 });
 
-
-//Plays the music toggle
-if (musicToggle) {
-    musicToggle.addEventListener("click", (evt) => {
-    swipeAudio.volume = 1.0
-    swipeAudio.play()
-  });
-}
-
-//Plays the SFX toggle
-if (sfxToggle) {
-    sfxToggle.addEventListener("click", (evt) => {
-    swipeAudio.volume = 1.0
-    swipeAudio.play()
-  });
-}
 
 startCountdown();
 board.addEventListener("click", handleTileClick);
