@@ -266,6 +266,7 @@
       const scoreDisplay = document.getElementById("score"); 
       const musicToggle = document.getElementById("musicToggle");
       const sfxToggle = document.getElementById("sfxToggle");
+      const backgroundMusic = new Audio("audio/background-music.mp3");
       const swipeAudio = new Audio("audio/swipe.mp3");
       const rowHeight = 75; // 60px tile + 15px gap
       const greenAudio = new Audio("audio/green.mp3");
@@ -280,14 +281,18 @@
       let countdownValue = 3;
       let score = 0;
       let lives = 3;
-      let gameSpeed = 2000; // the speed in milliseconds (2000 ms = 2s)
       let gameInterval = null;
       let triviaTimer; 
       let gamePaused = false;
       let currentTrivia = null;
       let triviaHandler = false;
       let correctStreak = 0;
-
+      let initialGameSpeed = 2400;
+      let minGameSpeed = 1000;
+      let gameSpeedReduction = 40;
+      let gameSpeedController = null;
+      let startTime = null;
+      let timeInterval = null;
 
       function startTrivia(difficulty = 'easy') {
         const modal = document.getElementById("triviaModal");
@@ -357,15 +362,20 @@
       if (countdownOverlay && countdownNum) {
 
       countdownNum.textContent = countdownValue;
+      
       const interval = setInterval(() => {
         countdownValue--;
+        
         if (countdownValue > 0) {
           countdownNum.textContent = countdownValue;
         } else {
           clearInterval(interval);
           countdownOverlay.style.display = "none";
+
           // You can start your game logic here after countdown ends
+          startGameTimer();
           startGameLoop();
+          startSpeedControl();
         }
       }, 1000);
     }
@@ -469,21 +479,32 @@
       }
 
 
-      function startGameLoop() {
-        if (gamePaused || lives == 0) return;
+      function startSpeedControl() {
+          clearInterval(gameSpeedController);
+          gameSpeedController = setInterval(() => {
+            if (gamePaused || lives <= 0) return;
 
-        clearInterval(gameInterval); // Always clear before starting new
-        gameInterval = setInterval(() => {
-          if (gamePaused || lives == 0) return;
+            if (initialGameSpeed > minGameSpeed) {
+              initialGameSpeed -= gameSpeedReduction;
+              if (initialGameSpeed < minGameSpeed) {
+                initialGameSpeed = minGameSpeed;
+              }
+            }
+          }, 1000);
+        }
+
+
+      let gameLoopTimeout = null;
+
+        function gameLoop() {
+          if (gamePaused || lives <= 0) return;
 
           generateTileRow();
 
           const rows = board.querySelectorAll(".tile-row");
           const maxRows = 5;
-
           if (rows.length > maxRows) {
             const lastRow = rows[rows.length - 1];
-
             const missed = Array.from(lastRow.children).some(tile =>
               (tile.classList.contains("green") || tile.classList.contains("blue")) &&
               !tile.classList.contains("clicked")
@@ -491,25 +512,35 @@
 
             if (missed && lives > 0 && !gamePaused) {
               redAudio.play();
-              showRandomTrivia(); 
+              showRandomTrivia();
             }
 
             lastRow.remove();
-          }
+        }
 
-          if (gameSpeed > 700) {
-            gameSpeed -= 100;
-            clearInterval(gameInterval);
-            startGameLoop();
-          }
+  // Schedule next iteration with updated speed
+  gameLoopTimeout = setTimeout(gameLoop, initialGameSpeed);
+}
 
-        }, gameSpeed);
+      function startGameLoop() {
+        if (gamePaused || lives <= 0) return;
+        clearTimeout(gameLoopTimeout);
+        backgroundMusic.volume = 0.2;
+        backgroundMusic.play();
+        gameLoop();
       }
+
+
+      function stopGameLoop() {
+        clearTimeout(gameLoopTimeout);
+      }
+      
 
 
       function showRandomTrivia() {
           if (lives <= 0) return; // Prevent showing trivia if game is ove
           gamePaused = true;
+          initialGameSpeed = 2400;
 
           clearInterval(gameInterval);
           clearInterval(triviaTimer);
@@ -585,6 +616,7 @@
               } else {
                 btn.style.backgroundColor = "#f44336"; // Red for wrong
                 lives--;
+                initialGameSpeed = 2400;
                 updateLivesUI();
 
                 // Highlight correct one too
@@ -714,6 +746,22 @@
             }, 1000);
           }
 
+
+          function startGameTimer() {
+              startTime = Date.now(); // Record start time
+              const timerDisplay = document.getElementById("time");
+
+              gameTimerInterval = setInterval(() => {
+                const now = Date.now();
+                const elapsed = now - startTime; // in milliseconds
+
+                const totalSeconds = Math.floor(elapsed / 1000);
+                const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+                const seconds = String(totalSeconds % 60).padStart(2, "0");
+
+                timerDisplay.textContent = `${minutes}:${seconds}`;
+              }, 1000);
+          }
 
 //<--------------------------Event listeners---------------------------->
 
