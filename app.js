@@ -499,6 +499,9 @@
         function gameLoop() {
           if (gamePaused || lives <= 0) return;
 
+          backgroundMusic.volume = 0.25;
+          backgroundMusic.play();
+
           generateTileRow();
 
           const rows = board.querySelectorAll(".tile-row");
@@ -844,6 +847,24 @@ nextBtn.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   updateHighScoreUI(); // Ensures it runs after DOM is ready
+});
+
+
+
+document.addEventListener("click", function initAudioOnce() {
+  backgroundMusic = 0.25;
+  backgroundMusic.play();
+  document.removeEventListener("click", initAudioOnce);
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateHighScoreUI();
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateHighScoreUI(); // existing line
 });
 
 
