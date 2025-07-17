@@ -1,5 +1,6 @@
 //<--------------------------Constants---------------------------->
 
+      //array of the instructions to play the game
       const instructions = [
           "You have 3 lives in a single game.",
           "Tiles will appear to you row by row, from the top of the grid to the bottom.",
@@ -13,6 +14,7 @@
           "Enjoy the game, take it easy!",
       ];
 
+      //nested array of the triviaQuestions
      const triviaQuestions = {
           easy: [
             {
@@ -153,11 +155,6 @@
               correct: "Joaquín 'El Chapo' Guzmán"
             },
             {
-              question: "What is the main difference between a debit card and a credit card?",
-              options: ["Debit cards allow you to borrow money from the bank.", "Credit cards have no spending limit.", "Debit cards use your own money, credit cards allow you to borrow money from the bank.", "None of the above."],
-              correct: "Debit cards use your own money, credit cards allow you to borrow money from the bank."
-            },
-            {
               question: "What organ is responsible for producing insulin?",
               options: ["Pancreas", "Kidney", "Liver", "Large Intestine"],
               correct: "Pancreas"
@@ -171,7 +168,12 @@
               question: "What is gluten found in?",
               options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
               correct: "Wheat"
-            },                  
+            },
+             {
+              question: "What arab country is part of the original founding UN members?",
+              options: ["Saudi Arabia", "Iraq", "Syria", "All options are correct"],
+              correct: "All options are correct"
+            },                      
           ],
           hard: [
             {
@@ -240,66 +242,73 @@
               correct: "Greenland"
             },
             {
-              question: "What is gluten found in?",
-              options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
-              correct: "Wheat"
+              question: "As of 2025, how many countries are part of the United Nations?",
+              options: ["193", "194", "195", "196"],
+              correct: "193"
+            },
+             {
+              question: "What is the main difference between a debit card and a credit card?",
+              options: ["Debit cards allow you to borrow money from the bank.", "Credit cards have no spending limit.", "Debit cards use your own money, credit cards allow you to borrow money from the bank.", "None of the above."],
+              correct: "Debit cards use your own money, credit cards allow you to borrow money from the bank."
             },
           ]
       };
 
+      //nested array that stores the questions already used so that they don't get repeated
       const usedTrivia = {
             easy: [],
             medium: [],
             hard: []
       };
 
-      const instructionText = document.getElementById("instructionText");
-      const stepCounter = document.getElementById("stepCounter");
-      const backBtn = document.getElementById("backBtn");
-      const nextBtn = document.getElementById("nextBtn");
-      const countdownOverlay = document.getElementById("counter");
-      const countdownNum = document.getElementById("countdownNum");
-      const board = document.getElementById("tileBoard");
-      const tileCount = 5;
-      const minRedTiles = 3;
-      const maxRedTiles = tileCount - 1;
-      const scoreDisplay = document.getElementById("score"); 
-      const musicToggle = document.getElementById("musicToggle");
+
+      const instructionText = document.getElementById("instructionText");   //gets instruction text from index.html
+      const stepCounter = document.getElementById("stepCounter");  //displays the current no # of step in index.html
+      const backBtn = document.getElementById("backBtn");  //gets the back button in the instructions modal box
+      const nextBtn = document.getElementById("nextBtn");  //gets the next button in the instructions modal box
+      const countdownOverlay = document.getElementById("counter");  //gets the counter id from the game.html
+      const countdownNum = document.getElementById("countdownNum");  //gets the countdown number from the game.html
+      const board = document.getElementById("tileBoard"); //gets the tile board from the game.html
+      const tileCount = 5; //number of tiles in a single row 
+      const minRedTiles = 3;  //MINIMUM number of red tiles in a single row (3)
+      const maxRedTiles = tileCount - 1;  //MAXIMUM number of red tiles in a single row (4)
+      const scoreDisplay = document.getElementById("score"); //gets the score id from game.html
+      const musicToggle = document.getElementById("musicToggle"); //gets the score
       const sfxToggle = document.getElementById("sfxToggle");
-      const backgroundMusic = new Audio("audio/background-music.mp3");
+      const backgroundMusic = new Audio("audio/background-music.mp3"); //selects background music audio 
       const swipeAudio = new Audio("audio/swipe.mp3");
-      const rowHeight = 75; // 60px tile + 15px gap
-      const greenAudio = new Audio("audio/green.mp3");
-      const redAudio = new Audio("audio/red.mp3");
-      const blueAudio = new Audio("audio/blue.mp3");
-      const triviaModal = document.querySelector(".trivia-modal");
+      const rowHeight = 75; //tile 60px + gap 15px = 75px
+      const greenAudio = new Audio("audio/green.mp3"); //selects green tile audio sf
+      const redAudio = new Audio("audio/red.mp3"); //selects red tile audio sf
+      const blueAudio = new Audio("audio/blue.mp3"); //selects blue tile audio sf
+      const triviaModal = document.querySelector(".trivia-modal"); //selects the trivial modal class from game.html
 
 //<--------------------------Variables---------------------------->
 
-      let currentStep = 0
-      let countdownValue = 3;
-      let score = 0;
-      let lives = 3;
-      let gameInterval = null;
-      let triviaTimer; 
-      let gamePaused = false;
-      let currentTrivia = null;
+      let currentStep = 0  //gets the current no of step in instructions
+      let countdownValue = 3;  //gets the current no of countdown in game.html
+      let score = 0;  //stores score variable
+      let lives = 3;  //stores number of lives player has
+      let gameInterval = null;  //stores the game interval
+      let triviaTimer;  //stores the triviaTimer for countdown
+      let gamePaused = false;   //stores the gamePaused boolean
+      let currentTrivia = null; 
       let triviaHandler = false;
-      let correctStreak = 0;
-      let initialGameSpeed = 2400;
-      let minGameSpeed = 900;
-      let gameSpeedReduction = 50;
-      let gameSpeedController = null;
-      let startTime = null;
-      let timeInterval = null;
+      let correctStreak = 0; //counter for correct trivia ans streak
+      let initialGameSpeed = 2400; //stores the starting tile speed
+      let maxGameSpeed = 900;  //stores the top tile speed
+      let gameSpeedReduction = 50; //stores the speed increase rate
+      let gameSpeedController = null; //
+      let startTime = null;  //stores the game starting time
+      let timeInterval = null;  //stores the time interval
     
       
       // Restore toggle states
-      let musicEnabled = localStorage.getItem("musicEnabled") === "true";
-      let sfxEnabled = localStorage.getItem("sfxEnabled") === "true";
+      let musicEnabled = localStorage.getItem("musicEnabled") === "true"; //enables music to true by default 
+      let sfxEnabled = localStorage.getItem("sfxEnabled") === "true"; //enables SFX to true by default 
 
-      if (musicToggle) musicToggle.checked = musicEnabled;
-      if (sfxToggle) sfxToggle.checked = sfxEnabled;
+      if (musicToggle) musicToggle.checked = musicEnabled; //setting the musicToggle checkbox to musicEnabled
+      if (sfxToggle) sfxToggle.checked = sfxEnabled; //setting the sfx checkbox to sfxEnabled
 
       // Music toggle event
       if (musicToggle) {
@@ -322,19 +331,46 @@
         });
       }
 
-      function startTrivia(difficulty = 'easy') {
+      
+      //<-----------------------Functions---------------------------->
+
+      //Updates the instruction modal in the index.html
+        function updateInstruction() {
+          instructionText.textContent = instructions[currentStep];
+          stepCounter.textContent = `${currentStep + 1} / ${instructions.length}`;
+          backBtn.disabled = currentStep === 0;
+          nextBtn.disabled = currentStep === instructions.length - 1;
+        }
+
+      //Displays the instruction modal in the index.html after it is original set to display:none;
+        window.openInstructions = function() {
+          document.getElementById('instructionsModal').style.display = "flex";
+          currentStep = 0;
+          updateInstruction(); //This will reset to the first instruction
+        };
+
+      //this will close the instruction if he clicked on the close button
+      window.closeInstructions = function() {
+          document.getElementById('instructionsModal').style.display = "none";
+        };
+
+      //starts the trivia with an easy question
+      function startTrivia() {
         const modal = document.getElementById("triviaModal");
         const timerSpan = document.getElementById("timerValue");
         const closeBtn = document.querySelector(".close-trivia");
 
+      //sets the time limit for each time of question
       const timeLimits = {
         easy: 15,
         medium: 22,
         hard: 30
       };
 
-      let secondsLeft = timeLimits[difficulty] || 10;
+      //sets the time left based on difficulty
+      let secondsLeft = timeLimits[difficulty];
 
+      //shows the trivia modal in flex style after it was display:none by default
       if (modal) {
         modal.style.display = "flex";
       }
@@ -345,70 +381,50 @@
 
       timerSpan.textContent = secondsLeft;
 
-      triviaTimer = setInterval(() => {
+      //controlling the countdown of the triviaTimer
+      triviaTimer = setInterval(() => {  //the set interval will execute the triviaTimer in ms until stopped by clearInterval
         secondsLeft--;
         timerSpan.textContent = secondsLeft;
 
         if (secondsLeft <= 0) {
-          clearInterval(triviaTimer);
+          clearInterval(triviaTimer);  //this will stop the triviaTimer from displaying if the secondsLeft is 0 or less
 
-          // Enable close button again
+          // Enables the close button if the timer finished
           closeBtn.style.pointerEvents = "auto";
           closeBtn.style.opacity = 1;
-
-          // (Optional) You can automatically resume the game here:
-          // closeTriviaModal();
         }
       }, 1000);
     }
 
-//<--------------------------Functions---------------------------->
+      //Countdown logic
+      function startCountdown(){
+          if (countdownOverlay && countdownNum) {
 
-  function updateInstruction() {
-    instructionText.textContent = instructions[currentStep];
-    stepCounter.textContent = `${currentStep + 1} / ${instructions.length}`;
-    backBtn.disabled = currentStep === 0;
-    nextBtn.disabled = currentStep === instructions.length - 1;
-  }
-
-  window.openInstructions = function() {
-    document.getElementById('instructionsModal').style.display = "flex";
-    currentStep = 0;
-    updateInstruction(); //This will reset to the first instruction
-  };
-
-  window.closeInstructions = function() {
-    document.getElementById('instructionsModal').style.display = "none";
-  };
-
-  //Countdown logic
-  function startCountdown(){
-      if (countdownOverlay && countdownNum) {
-
-      countdownNum.textContent = countdownValue;
-      
-      const interval = setInterval(() => {
-        countdownValue--;
-        
-        if (countdownValue > 0) {
           countdownNum.textContent = countdownValue;
-        } else {
-          clearInterval(interval);
-          countdownOverlay.style.display = "none";
+          
+          const interval = setInterval(() => {
+            countdownValue--;
+            
+            if (countdownValue > 0) {
+              countdownNum.textContent = countdownValue;
+            } else {
+              clearInterval(interval);
+              countdownOverlay.style.display = "none";
 
-          // You can start your game logic here after countdown ends
-          startGameTimer();
-          startGameLoop();
-          startSpeedControl();
+              // This will run the game right after the countdown is over
+              startGameTimer();
+              startGameLoop();
+              startSpeedControl();
+            }
+          }, 1000);
         }
-      }, 1000);
-    }
-  }
+      }
 
     //Background music playing function
     function playBackgroundMusic(){
         if(!musicEnabled) return;
 
+        //plays the background music in a loop
         backgroundMusic.volume = 0.25;
         backgroundMusic.loop = true;
         backgroundMusic.play();
@@ -430,30 +446,32 @@
       // No immediate action needed here, since sfx play is conditional on sfxEnabled
     }
 
-    //The board javascript, inside the game.html page
+    //The tile generation function, MOST important function, inside the game.html page
     function generateTileRow() {
-      const redTileCount = Math.floor(Math.random() * (maxRedTiles - minRedTiles + 1)) + minRedTiles;
-      const tileTypes = [];
+      const redTileCount = Math.floor(Math.random() * (maxRedTiles - minRedTiles + 1)) + minRedTiles; //defines no of red tile in a single row using formula
+      const tileTypes = []; 
 
-      for (let i = 0; i < redTileCount; i++) tileTypes.push("red");
-      while (tileTypes.length < tileCount) tileTypes.push(Math.random() < 0.5 ? "green" : "blue");
+      for (let i = 0; i < redTileCount; i++) tileTypes.push("red");   //adds the red tiles
+      while (tileTypes.length < tileCount) tileTypes.push(Math.random() < 0.5 ? "green" : "blue");  //fils remaining spots with green or blue
 
-      // Shuffle
+    //shuffles the order of the tiles randomly
       for (let i = tileTypes.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [tileTypes[i], tileTypes[j]] = [tileTypes[j], tileTypes[i]];
+        [tileTypes[i], tileTypes[j]] = [tileTypes[j], tileTypes[i]];  //swaps the color values
       }
 
+      //creates new rows
       const row = document.createElement("div");
       row.classList.add("tile-row");
 
+      //creating a tile element based on each tile type
       tileTypes.forEach(type => {
         const tile = document.createElement("div");
         tile.classList.add("tile", type);
         row.appendChild(tile);
       });
 
-      board.insertBefore(row, board.firstChild); // Add to top (visually top = newer)
+      board.insertBefore(row, board.firstChild); // firstChild adds rows to top
     }
 
 
@@ -473,6 +491,7 @@
          if (lives <= 0) return; // Don't process blue if game is over
           score += 10;
 
+          //plays the interaction sfx if enabled
           if (sfxEnabled){
               blueAudio.volume = 1.0;
               blueAudio.play();
@@ -482,6 +501,7 @@
            if (lives <= 0) return; // Don't process green tile if game is over
           score += 20;
 
+          //plays the interaction sfx if enabled
           if (sfxEnabled){
               greenAudio.volume = 1.0;
               greenAudio.play();
@@ -490,12 +510,13 @@
       }else if (tileDet.classList.contains("red")){
           if (lives <= 0) return; // Don't process red tile if game is over
           
+          //plays the interaction sfx if enabled
           if (sfxEnabled){
               redAudio.volume = 1.0;
               redAudio.play();
           }
 
-          showRandomTrivia(); // ← add this
+          showRandomTrivia(); //shows the trivia if the player misclicked
 
           //pauses the game
           clearInterval(gameInterval)
@@ -507,20 +528,23 @@
       scoreDisplay.textContent = `Score: ${score}`; 
     }
 
+    //Function to ensure tile rows are printed above the initial row
     function moveTilesUp() {
           const rows = Array.from(board.querySelectorAll(".tile-row"));
           
           rows.forEach(row => {
               const currentTop = parseInt(row.style.top || "0");
-              const newTop = currentTop - 50; // Speed per step
+              const newTop = currentTop - 50; 
               row.style.top = `${newTop}px`;
 
               if (newTop + row.offsetHeight < 0) {
-                  board.removeChild(row); // Remove if it moved off-screen
+                  board.removeChild(row); //Removes the row once it reaches off-screen
               }
           });
     }
 
+
+      //function to check if the player missed a blue or green tile
       function checkMissedTiles(row) {
         const tiles = row.querySelectorAll(".tile");
         const missed = Array.from(tiles).some(tile => {
@@ -529,21 +553,21 @@
         });
 
         if (missed) {
-          console.log("Missed correct tile(s) in this row — show trivia or reduce life.");
           redAudio.volume = 1.0;
           redAudio.play();
         }
       }
 
+      //function to control the game's speed
       function startSpeedControl() {
           clearInterval(gameSpeedController);
           gameSpeedController = setInterval(() => {
             if (gamePaused || lives <= 0) return;
 
-            if (initialGameSpeed > minGameSpeed) {
+            if (initialGameSpeed > maxGameSpeed) {
               initialGameSpeed -= gameSpeedReduction;
-              if (initialGameSpeed < minGameSpeed) {
-                initialGameSpeed = minGameSpeed;
+              if (initialGameSpeed < maxGameSpeed) {
+                initialGameSpeed = maxGameSpeed;
               }
             }
           }, 1000);
@@ -551,8 +575,9 @@
 
       let gameLoopTimeout = null;
 
+        //function to control the game's cycle and tile processing
         function gameLoop() {
-          if (gamePaused || lives <= 0) return;
+          if (gamePaused || lives <= 0) return; //if paused or no lives ensures the game does nothing
 
           generateTileRow();
 
@@ -577,20 +602,23 @@
   gameLoopTimeout = setTimeout(gameLoop, initialGameSpeed);
 }
 
+      //function that starts the game after the countdown is over
       function startGameLoop() {
         if (gamePaused || lives <= 0) return;
-        clearTimeout(gameLoopTimeout);
+        clearTimeout(gameLoopTimeout);  //clears any timeouts once the game starts (Ex: the countdown)
         playBackgroundMusic();
         gameLoop();
       }
 
+      //clears eveything once the game cycle ends
       function stopGameLoop() {
         clearTimeout(gameLoopTimeout);
       }
       
 
+      //function to show the trivia box
       function showRandomTrivia() {
-          if (lives <= 0) return; // Prevent showing trivia if game is ove
+          if (lives <= 0) return; // Prevent showing trivia if the game is over
           gamePaused = true;
           initialGameSpeed = 2400;
 
@@ -609,7 +637,7 @@
           );
 
           if (availableQuestions.length === 0) {
-            // All questions used for this difficulty — reset the used list
+            // All questions used for this difficulty which resets the used lists
             usedTrivia[chosenDiff] = [];
             availableQuestions.push(...questionSet);
           }
@@ -617,10 +645,10 @@
           const randomIndex = Math.floor(Math.random() * availableQuestions.length);
           const questionObj = availableQuestions[randomIndex];
 
-          // Mark as used
+          //Marks the question selected as used
           usedTrivia[chosenDiff].push(questionObj);
 
-          // Store current question
+          // Stores the current question
           currentTrivia = questionObj;
 
           let timeLimit = chosenDiff === "medium" ? 22 : chosenDiff === "hard" ? 30 : 15;
@@ -636,7 +664,7 @@
           const timerDisplay = document.getElementById("timerValue");
           timerDisplay.textContent = timeLeft;
 
-          // Create options
+          // Showcases the options for the trivia
           questionObj.options.forEach(option => {
             const btn = document.createElement("button");
             btn.classList.add("option");
@@ -648,16 +676,16 @@
 
               clearInterval(triviaTimer);
 
-              // Disable all buttons
+              //Disables all the buttons
               const allButtons = document.querySelectorAll(".option");
               allButtons.forEach(b => b.disabled = true);
 
               if (option === questionObj.correct) {
-                btn.style.backgroundColor = "#4CAF50"; // Green for correct
-                score += chosenDiff === "easy" ? 15 : chosenDiff === "medium" ? 30 : 45;
+                btn.style.backgroundColor = "#4CAF50"; // Shows green for correct answer
+                score += chosenDiff === "easy" ? 15 : chosenDiff === "medium" ? 30 : 45;  //adds the score based on difficulty points
                 scoreDisplay.textContent = `Score: ${score}`;
 
-                correctStreak++;
+                correctStreak++; //adds to the streak if answered correctly
 
                 if (correctStreak === 5){
                   lives++;
@@ -671,7 +699,7 @@
                 initialGameSpeed = 2400;
                 updateLivesUI();
 
-                // Highlight correct one too
+                // Highlights the correct answer 
                 allButtons.forEach(b => {
                   if (b.textContent === questionObj.correct) {
                     b.style.backgroundColor = "#4CAF50";
@@ -679,7 +707,7 @@
                 });
               }
 
-              // Enable close button
+              // Enables the close button
               const closeBtn = document.querySelector(".close-trivia");
               closeBtn.style.pointerEvents = "auto";
               closeBtn.style.opacity = "1";
@@ -690,12 +718,12 @@
             optionsContainer.appendChild(btn);
           });
 
-          // Disable close button initially
+          // Initially disables the close button
           const closeBtn = document.querySelector(".close-trivia");
           closeBtn.style.pointerEvents = "none";
           closeBtn.style.opacity = "0.4";
 
-          // Timer countdown
+          //Controls the trivia countdown
           triviaTimer = setInterval(() => {
             timeLeft--;
             timerDisplay.textContent = timeLeft;
@@ -719,11 +747,11 @@
                 }
               });
 
-              // Deduct a life
+              // Deducts a life if answered incorrectly
               if (lives > 0) lives--;
               updateLivesUI();
 
-              // Enable close button
+              // Enables close button
               closeBtn.style.pointerEvents = "auto";
               closeBtn.style.opacity = "1";
 
@@ -733,23 +761,26 @@
           }, 1000);
         }
 
+      //responsible for displaying current lives
       function updateLivesUI() {
           const livesDisplay = document.getElementById("lives");
           const hearts = "❤️".repeat(lives);
           livesDisplay.textContent = `Lives: ${hearts}`;
       }
 
+      //closes the trivia modal once the 'x' button is clicked
       function closeTriviaModal() {
           resumeGameAfterTrivia()
       }
 
+      //if the player has lives after the trivia, resume the game
       function resumeGameAfterTrivia() {
           if (lives <= 0){
               const modal = document.getElementById("triviaModal");
               modal.style.display = "none";
               clearInterval(triviaTimer);
               clearInterval(gameTimerInterval); //this will stop the timer when the player loses
-              board.innerHTML = ""; // Clear board
+              board.innerHTML = ""; // this will clear the board
 
               if (score > getHighScore()){
                   setHighScore(score);
@@ -764,22 +795,22 @@
             const modal = document.getElementById("triviaModal");
             modal.style.display = "none";
 
-            // Clear trivia timer
+            //Clears the trivia timer
             clearInterval(triviaTimer);
             triviaTimer = null;
             currentTrivia = null;
 
-            // Clear modal content
+            //Clears the modal content
             document.getElementById("triviaQuestion").textContent = "";
             document.getElementById("triviaOptions").innerHTML = "";
             document.getElementById("timerValue").textContent = "0";
 
-            // Reset close button
+            //Resets the close button
             const closeBtn = document.querySelector(".close-trivia");
             closeBtn.style.pointerEvents = "auto";
             closeBtn.style.opacity = "1";
 
-            // Show a mini countdown before resuming
+            //Will show the mini countdown after resuming
             let resumeCounter = 3;
             const counterOverlay = document.getElementById("counter");
             const countdownNum = document.getElementById("countdownNum");
@@ -805,14 +836,15 @@
             }, 1000);
           }
 
+          //will show the time spent playing the round
           function startGameTimer() {
             if (lives > 0){
-               startTime = Date.now(); // Record start time
+               startTime = Date.now(); //fetches the current date using Date.now()
               const timerDisplay = document.getElementById("time");
 
               gameTimerInterval = setInterval(() => {
                 const now = Date.now();
-                const elapsed = now - startTime; // in milliseconds
+                const elapsed = now - startTime; //formula to calculate the time
 
                 const totalSeconds = Math.floor(elapsed / 1000);
                 const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
@@ -823,10 +855,12 @@
             }
           }
 
+          //function to get the all time high score
           function getHighScore() {
               return parseInt(localStorage.getItem("highScore")) || 0;
           }
 
+          //function to update the all time high score if broken
           function updateHighScoreUI() {
               const highScoreDisplay = document.getElementById("highScore");
               if (highScoreDisplay) {
@@ -834,10 +868,12 @@
               }
           }
 
+          //function to set the all time high score if broken
           function setHighScore(newScore) {
                localStorage.setItem("highScore", newScore.toString());
           }
 
+          //fumction to show the screen once the game is Over
           function gameOver(){
             gamePaused = true;
 
@@ -857,19 +893,20 @@
             highScoreDisplay.textContent = `High Score: ${getHighScore()}`;
           }
 
-            // Restart the game — reset vars & start fresh or reload page
+            //Function to restart the game
             function restartRound() {
               // You can reset your variables or just reload the page to restart
               window.location.reload();
             }
 
-            // Main menu button
+            //Function to allow the main menu button to take the user to the homepage
             function goToMainMenu() {
               window.location.href = "index.html";
             }
 
 //<--------------------------Event listeners---------------------------->
 
+//event listener to navigate through instruction modal
 if (instructionText && stepCounter && backBtn && nextBtn) {
  backBtn.addEventListener("click", () => {
       if (currentStep > 0) {
@@ -878,6 +915,7 @@ if (instructionText && stepCounter && backBtn && nextBtn) {
       }
     });
 
+//event listener to update the step counter in instructions modal
 nextBtn.addEventListener("click", () => {
     if (currentStep < instructions.length - 1) {
         currentStep++;
@@ -888,11 +926,13 @@ nextBtn.addEventListener("click", () => {
     updateInstruction(); //Initialize on load
   }
 
+//event listener to update the high score and display it
 document.addEventListener("DOMContentLoaded", () => {
-  updateHighScoreUI(); // Ensures it runs after DOM is ready
+  updateHighScoreUI(); // Ensures the high score runs after DOM is ready
 });
 
 
+//event listener to play the background music
 document.addEventListener("click", function initAudioOnce() {
      //playBackgroundMusic();
      if (musicEnabled){
@@ -906,7 +946,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
+//event listener to enable/disable music and sfx
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("musicEnabled") === null) {
       localStorage.setItem("musicEnabled", "false");
@@ -917,6 +957,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
+//ENSURES that the enable/disable also works in the game.html not just index.html
 if (window.location.pathname.includes("game.html")) {
   document.addEventListener("click", function initAudioOnce() {
     if (musicEnabled) {
@@ -929,12 +971,13 @@ if (window.location.pathname.includes("game.html")) {
 startCountdown();
 board.addEventListener("click", handleTileClick);
 
+//logical condition to check if current score has beat the high score
 if (score > getHighScore()) {
   setHighScore(score);
   updateHighScoreUI();
 }
 
-// Attach listeners to buttons after DOM is loaded
+//Attaching event listeners once the game is over to either restart or go back to main menu
 document.addEventListener("DOMContentLoaded", () => {
   const restartBtn = document.getElementById("restartBtn");
   const mainMenuBtn = document.getElementById("mainMenuBtn");
@@ -942,4 +985,3 @@ document.addEventListener("DOMContentLoaded", () => {
   if (restartBtn) restartBtn.addEventListener("click", restartRound);
   if (mainMenuBtn) mainMenuBtn.addEventListener("click", goToMainMenu);
 });
-
