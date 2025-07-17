@@ -274,7 +274,6 @@
       const blueAudio = new Audio("audio/blue.mp3");
       const triviaModal = document.querySelector(".trivia-modal");
 
-
 //<--------------------------Variables---------------------------->
 
       let currentStep = 0
@@ -288,14 +287,40 @@
       let triviaHandler = false;
       let correctStreak = 0;
       let initialGameSpeed = 2400;
-      let minGameSpeed = 1000;
-      let gameSpeedReduction = 40;
+      let minGameSpeed = 900;
+      let gameSpeedReduction = 50;
       let gameSpeedController = null;
       let startTime = null;
       let timeInterval = null;
-      let musicEnabled = musicToggle ? musicToggle.checked : true;
-      let sfxEnabled = true;
+    
+      
+      // Restore toggle states
+      let musicEnabled = localStorage.getItem("musicEnabled") === "true";
+      let sfxEnabled = localStorage.getItem("sfxEnabled") === "true";
 
+      if (musicToggle) musicToggle.checked = musicEnabled;
+      if (sfxToggle) sfxToggle.checked = sfxEnabled;
+
+      // Music toggle event
+      if (musicToggle) {
+        musicToggle.addEventListener("change", () => {
+          musicEnabled = musicToggle.checked;
+          localStorage.setItem("musicEnabled", musicEnabled.toString());
+          if (musicEnabled) {
+            playBackgroundMusic();
+          } else {
+            backgroundMusic.pause();
+          }
+        });
+      }
+
+      // SFX toggle event
+      if (sfxToggle) {
+        sfxToggle.addEventListener("change", () => {
+          sfxEnabled = sfxToggle.checked;
+          localStorage.setItem("sfxEnabled", sfxEnabled.toString());
+        });
+      }
 
       function startTrivia(difficulty = 'easy') {
         const modal = document.getElementById("triviaModal");
@@ -337,9 +362,7 @@
       }, 1000);
     }
 
-
 //<--------------------------Functions---------------------------->
-
 
   function updateInstruction() {
     instructionText.textContent = instructions[currentStep];
@@ -348,13 +371,11 @@
     nextBtn.disabled = currentStep === instructions.length - 1;
   }
 
-
   window.openInstructions = function() {
     document.getElementById('instructionsModal').style.display = "flex";
     currentStep = 0;
     updateInstruction(); //This will reset to the first instruction
   };
-
 
   window.closeInstructions = function() {
     document.getElementById('instructionsModal').style.display = "none";
@@ -383,7 +404,6 @@
       }, 1000);
     }
   }
-
 
     //Background music playing function
     function playBackgroundMusic(){
@@ -435,7 +455,6 @@
 
       board.insertBefore(row, board.firstChild); // Add to top (visually top = newer)
     }
-
 
 
     //function handleTileClick event that enables the detection of the tiles and updating the score
@@ -502,7 +521,6 @@
           });
     }
 
-
       function checkMissedTiles(row) {
         const tiles = row.querySelectorAll(".tile");
         const missed = Array.from(tiles).some(tile => {
@@ -517,7 +535,6 @@
         }
       }
 
-
       function startSpeedControl() {
           clearInterval(gameSpeedController);
           gameSpeedController = setInterval(() => {
@@ -531,7 +548,6 @@
             }
           }, 1000);
         }
-
 
       let gameLoopTimeout = null;
 
@@ -568,12 +584,10 @@
         gameLoop();
       }
 
-
       function stopGameLoop() {
         clearTimeout(gameLoopTimeout);
       }
       
-
 
       function showRandomTrivia() {
           if (lives <= 0) return; // Prevent showing trivia if game is ove
@@ -719,7 +733,6 @@
           }, 1000);
         }
 
-
       function updateLivesUI() {
           const livesDisplay = document.getElementById("lives");
           const hearts = "❤️".repeat(lives);
@@ -729,7 +742,6 @@
       function closeTriviaModal() {
           resumeGameAfterTrivia()
       }
-
 
       function resumeGameAfterTrivia() {
           if (lives <= 0){
@@ -748,7 +760,6 @@
 
               return;
           }
-
 
             const modal = document.getElementById("triviaModal");
             modal.style.display = "none";
@@ -793,7 +804,6 @@
               if (lives <= 0) return; //  Don't resume game if player is out of lives
             }, 1000);
           }
-
 
           function startGameTimer() {
             if (lives > 0){
@@ -860,7 +870,6 @@
 
 //<--------------------------Event listeners---------------------------->
 
-
 if (instructionText && stepCounter && backBtn && nextBtn) {
  backBtn.addEventListener("click", () => {
       if (currentStep > 0) {
@@ -868,7 +877,6 @@ if (instructionText && stepCounter && backBtn && nextBtn) {
         updateInstruction();
       }
     });
-
 
 nextBtn.addEventListener("click", () => {
     if (currentStep < instructions.length - 1) {
@@ -885,7 +893,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
 document.addEventListener("click", function initAudioOnce() {
      //playBackgroundMusic();
      if (musicEnabled){
@@ -894,32 +901,38 @@ document.addEventListener("click", function initAudioOnce() {
      document.removeEventListener("click", initAudioOnce);
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
   updateHighScoreUI();
 });
 
 
-// Attach event listeners after DOM is loaded
+
 document.addEventListener("DOMContentLoaded", () => {
-  if (musicToggle) {
-    musicToggle.addEventListener("change", handleMusicToggle);
-  }
-  if (sfxToggle) {
-    sfxToggle.addEventListener("change", handleSfxToggle);
-  }
+    if (localStorage.getItem("musicEnabled") === null) {
+      localStorage.setItem("musicEnabled", "false");
+    }
+
+    if (localStorage.getItem("sfxEnabled") === null) {
+      localStorage.setItem("sfxEnabled", "false");
+    }
 });
 
+if (window.location.pathname.includes("game.html")) {
+  document.addEventListener("click", function initAudioOnce() {
+    if (musicEnabled) {
+      playBackgroundMusic();
+    }
+    document.removeEventListener("click", initAudioOnce);
+  });
+}
 
 startCountdown();
 board.addEventListener("click", handleTileClick);
-
 
 if (score > getHighScore()) {
   setHighScore(score);
   updateHighScoreUI();
 }
-
 
 // Attach listeners to buttons after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -929,3 +942,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (restartBtn) restartBtn.addEventListener("click", restartRound);
   if (mainMenuBtn) mainMenuBtn.addEventListener("click", goToMainMenu);
 });
+
