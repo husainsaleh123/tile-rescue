@@ -1,6 +1,7 @@
 # Tile Rescue
 
-A web-based reaction and trivia game developed using HTML, CSS, and Javascript.
+A score-based endless tile selection game developed using HTML, CSS, and Javascript. Improves **focus**, **reaction time**, and **general knowledge**.
+
 
 ### 🎮 Game description:
 
@@ -14,20 +15,19 @@ A set of tiles will appear in a column/grid one at a time from top to bottom. Yo
 - Once you accidentally press the wrong tile, you have a chance to save your life **by answering a random trivia question**.
 - If you answer 5 trivial questions correctly in a row, **you win an extra life!**
 - Timer for each trivia question: 
-    - **Easy questions:** 10 seconds.
-    - **Medium questions:** 20 seconds.
+    - **Easy questions:** 15 seconds.
+    - **Medium questions:** 22 seconds.
     - **Hard questions:** 30 seconds.
 
 ## 👾 Point system:
 
-### Tiles
+### Tiles point system
 
 - Red tile = 0 points.
-- Blue tile = 10 points (initialSpeed / currentSpeed)
-- Green tile = 20 points * (initialSpeed / currentSpeed)
+- Blue tile = 10 points
+- Green tile = 20 points
 
 
-score = baseScore * (initialSpeed / currentSpeed)
 ### Trivia
 
 - Easy question = 15 points.
@@ -40,8 +40,8 @@ score = baseScore * (initialSpeed / currentSpeed)
 - CSS.
 - Javascript.
 
-## ▶️ How to launch
+## ▶️ Deployment link goes here.
 
-1. Clone the repository
-2. Run "index.html" in your web-browser
-3. Enjoy!
+## ▶️ Prototype link goes here.
+
+## ▶️ Trello checklist link goes here.
