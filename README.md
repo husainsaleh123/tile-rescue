@@ -40,8 +40,8 @@ A set of tiles will appear in a column/grid one at a time from top to bottom. Yo
 - CSS.
 - Javascript.
 
-## ▶️ Deployment link goes here.
+## ▶️ Deployment link goes [here](https://tile-rescue.surge.sh/).
 
-## ▶️ Prototype link goes here.
+## ▶️ Prototype link goes [here](https://www.figma.com/design/k6fR6OFoCuDXbPrsQTDw7D/Untitled?node-id=0-1&t=kRchk7MP10ejXEJy-1).
 
-## ▶️ Trello checklist link goes here.
+## ▶️ Trello checklist link [here](https://trello.com/invite/b/686f092f0f2a5fa5dd39bf8b/ATTI8e4fce6b43f8adfe8980d696b5af2be5B17342FB/tile-rescue-trello).
