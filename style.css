@@ -5,14 +5,29 @@
     height: 100%;
 }*/
 
+@font-face {
+  font-family: 'Gome Pixel';
+  src: url('../fonts/gome-pixel/GomePixel-ARJd7.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 html, body {
   height: 100%;
-  background: linear-gradient(#2a2b39); /*Styling the background color*/
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   flex: 1;
+    /* Multiple background layers: gradient on top, image underneath */
+  background: 
+    linear-gradient(rgb(11, 16, 49, 0.8)),
+    url('images/background-img-3.jpg'); /* Replace with your image path */
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 
@@ -27,13 +42,13 @@ html, body {
 
 /* Styling properties the h1 heading "Welcome to Tile Rescue!" */
 .welcome-screen h1{
-    font-size: 40px; 
+    font-size: 55px; 
     color: white;
     text-align: center;
     padding: 20px auto;
     margin: auto;
-    font-family: "Inter", sans-serif; 
-    font-weight: 600;
+    font-family: 'Gome Pixel', sans-serif; 
+    font-weight: 300;
     letter-spacing: 1.75px;
 }
 
@@ -280,10 +295,10 @@ footer{
     /*Styles the game title heading*/
     .game-title {
         color: white;
-        font-family: "Inter", sans-serif;
+        font-family: 'Gome Pixel', sans-serif; 
         text-align: center;
         font-size: 60px;
-        font-weight: 600;
+        font-weight: 400;
         margin: 80px auto 50px;
     }
 
