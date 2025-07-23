@@ -296,7 +296,7 @@
       let triviaHandler = false;
       let correctStreak = 0; //counter for correct trivia ans streak
       let initialGameSpeed = 2400; //stores the starting tile speed
-      let maxGameSpeed = 900;  //stores the top tile speed
+      let maxGameSpeed = 800;  //stores the top tile speed
       let gameSpeedReduction = 50; //stores the speed increase rate
       let gameSpeedController = null; //
       let startTime = null;  //stores the game starting time
