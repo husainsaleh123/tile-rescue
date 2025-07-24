@@ -60,7 +60,7 @@ html, body {
 .welcome-page-buttons{
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
     align-items: center;
 }
@@ -548,7 +548,7 @@ footer{
             flex-direction: column; /* Displays all the flex items in a column manner */
             justify-content: center;
             align-items: center;
-            margin: 40px auto 20px; /*Adds space from the top of the page to the heading*/
+            margin: 50px auto 20px; /*Adds space from the top of the page to the heading*/
         }
 
                 
@@ -598,12 +598,12 @@ footer{
             margin-top: 30px;
             display: flex;
             flex-direction: row;
-            gap: 30px;
+            gap: 24px;
             justify-content: center;
             align-items: center;
             color:white;
             font-size: 12px;
-            font-weight: 300;
+            font-weight: 400;
             font-family: "Inter", sans-serif; 
         }
 
@@ -611,10 +611,10 @@ footer{
         .toggle {
             position: relative;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
             font-family: "Inter",sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
         }
 
