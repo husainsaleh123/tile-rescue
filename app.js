@@ -261,7 +261,6 @@
             hard: []
       };
 
-
       const instructionText = document.getElementById("instructionText");   //gets instruction text from index.html
       const stepCounter = document.getElementById("stepCounter");  //displays the current no # of step in index.html
       const backBtn = document.getElementById("backBtn");  //gets the back button in the instructions modal box
@@ -275,13 +274,17 @@
       const scoreDisplay = document.getElementById("score"); //gets the score id from game.html
       const musicToggle = document.getElementById("musicToggle"); //gets the score
       const sfxToggle = document.getElementById("sfxToggle");
-      const backgroundMusic = new Audio("audio/background-music.mp3"); //selects background music audio 
+      const backgroundMusic = new Audio("audio/background-music.mp3"); //selects background music audio
+      window.mainMenuBackgroundMusic = new Audio("audio/main-menu-music.mp3"); //selects background music audio  
       const swipeAudio = new Audio("audio/swipe.mp3");
       const rowHeight = 75; //tile 60px + gap 15px = 75px
       const greenAudio = new Audio("audio/green.mp3"); //selects green tile audio sf
       const redAudio = new Audio("audio/red.mp3"); //selects red tile audio sf
       const blueAudio = new Audio("audio/blue.mp3"); //selects blue tile audio sf
       const triviaModal = document.querySelector(".trivia-modal"); //selects the trivial modal class from game.html
+      const highScore = new Audio("audio/high-score.mp3");
+      const correctAns = new Audio("audio/correct-ans.mp3")
+      const wrongAns = new Audio("audio/wrong-ans.mp3")
 
 //<--------------------------Variables---------------------------->
 
@@ -312,16 +315,18 @@
 
       // Music toggle event
       if (musicToggle) {
-        musicToggle.addEventListener("change", () => {
-          musicEnabled = musicToggle.checked;
-          localStorage.setItem("musicEnabled", musicEnabled.toString());
-          if (musicEnabled) {
-            playBackgroundMusic();
-          } else {
-            backgroundMusic.pause();
-          }
-        });
-      }
+      musicToggle.addEventListener("change", () => {
+        musicEnabled = musicToggle.checked;
+        localStorage.setItem("musicEnabled", musicEnabled.toString());
+        
+        if (musicEnabled) {
+          playBackgroundMusic();
+        } else {
+          backgroundMusic.pause();
+          mainMenuBackgroundMusic.pause();
+        }
+      });
+    }
 
       // SFX toggle event
       if (sfxToggle) {
@@ -420,16 +425,41 @@
         }
       }
 
-    //Background music playing function
-    function playBackgroundMusic(){
-        if(!musicEnabled) return;
-
-        //plays the background music in a loop
-        backgroundMusic.volume = 0.25;
-        backgroundMusic.loop = true;
-        backgroundMusic.play();
+    function initAudio() {
+      if (musicEnabled) {
+        playBackgroundMusic();
+      }
+      document.removeEventListener("click", initAudio);
     }
 
+    //Background music playing function
+    function playBackgroundMusic() {
+      if (!musicEnabled) return;
+
+      if (backgroundMusic) backgroundMusic.pause();
+      if (mainMenuBackgroundMusic) mainMenuBackgroundMusic.pause();
+
+      let audioToPlay = null;
+      const path = window.location.pathname;
+
+      if (path.includes("index.html") || path === "/" || path.endsWith("/index")) {
+        mainMenuBackgroundMusic.volume = 0.25;
+        mainMenuBackgroundMusic.loop = true;
+        audioToPlay = mainMenuBackgroundMusic;
+      } else if (path.includes("game.html")) {
+        backgroundMusic.volume = 0.25;
+        backgroundMusic.loop = true;
+        audioToPlay = backgroundMusic;
+      }
+
+      if (audioToPlay) {
+        audioToPlay.play().catch(err => {
+          console.warn("Autoplay blocked or failed:", err);
+        });
+      }
+    }
+
+    
     // Function to handle music toggle changes
     function handleMusicToggle() {
       musicEnabled = musicToggle.checked;
@@ -473,7 +503,6 @@
 
       board.insertBefore(row, board.firstChild); // firstChild adds rows to top
     }
-
 
     //function handleTileClick event that enables the detection of the tiles and updating the score
 
@@ -542,7 +571,6 @@
               }
           });
     }
-
 
       //function to check if the player missed a blue or green tile
       function checkMissedTiles(row) {
@@ -680,22 +708,35 @@
               const allButtons = document.querySelectorAll(".option");
               allButtons.forEach(b => b.disabled = true);
 
-              if (option === questionObj.correct) {
-                btn.style.backgroundColor = "#4CAF50"; // Shows green for correct answer
-                score += chosenDiff === "easy" ? 15 : chosenDiff === "medium" ? 30 : 45;  //adds the score based on difficulty points
-                scoreDisplay.textContent = `Score: ${score}`;
+            // Inside your correct answer block:
+            if (option === questionObj.correct) {
+              btn.style.backgroundColor = "#4CAF50";
+              score += chosenDiff === "easy" ? 15 : chosenDiff === "medium" ? 30 : 45;
+              scoreDisplay.textContent = `Score: ${score}`;
 
-                correctStreak++; //adds to the streak if answered correctly
+              correctStreak++;
 
-                if (correctStreak === 5){
-                  lives++;
-                  correctStreak = 0;
-                  updateLivesUI();
-                }
+              // Plays the sound safely
+              if (sfxEnabled){
+                correctAns.volume = 0.5;
+                correctAns.play()
+              }
+
+              if (correctStreak === 5){
+                lives++;
+                correctStreak = 0;
+                updateLivesUI();
+              }
 
               } else {
                 btn.style.backgroundColor = "#f44336"; // Red for wrong
                 lives--;
+
+                if (sfxEnabled){
+                  wrongAns.volume = 0.5;
+                  wrongAns.play();
+                }
+
                 initialGameSpeed = 2400;
                 updateLivesUI();
 
@@ -871,6 +912,11 @@
           //function to set the all time high score if broken
           function setHighScore(newScore) {
                localStorage.setItem("highScore", newScore.toString());
+                if (sfxEnabled){
+                    highScore.volume = 0.5;
+                    highScore.play();
+                }
+  
           }
 
           //fumction to show the screen once the game is Over
@@ -931,20 +977,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHighScoreUI(); // Ensures the high score runs after DOM is ready
 });
 
-
-//event listener to play the background music
-document.addEventListener("click", function initAudioOnce() {
-     //playBackgroundMusic();
-     if (musicEnabled){
-      playBackgroundMusic();
-     }
-     document.removeEventListener("click", initAudioOnce);
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   updateHighScoreUI();
 });
-
 
 //event listener to enable/disable music and sfx
 document.addEventListener("DOMContentLoaded", () => {
@@ -957,16 +992,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const musicToggle = document.getElementById("musicToggle");
+  if (musicToggle) {
+    musicToggle.addEventListener("click", () => {
+      if (musicToggle.checked) {
+        localStorage.setItem("musicEnabled", "true");
+        playBackgroundMusic();
+      } else {
+        localStorage.setItem("musicEnabled", "false");
+        backgroundMusic.pause();
+        if (window.mainMenuBackgroundMusic) {
+          mainMenuBackgroundMusic.pause();
+        }
+      }
+    });
+  }
+});
 
-//ENSURES that the enable/disable also works in the game.html not just index.html
-if (window.location.pathname.includes("game.html")) {
-  document.addEventListener("click", function initAudioOnce() {
-    if (musicEnabled) {
-      playBackgroundMusic();
-    }
-    document.removeEventListener("click", initAudioOnce);
-  });
-}
+document.addEventListener("click", function initAudioOnce() {
+  const musicEnabled = localStorage.getItem("musicEnabled") === "true";
+  if (musicEnabled) {
+    playBackgroundMusic();
+  }
+
+  // remove the event listener so this runs only once
+  document.removeEventListener("click", initAudioOnce);
+}, { once: true });
 
 startCountdown();
 board.addEventListener("click", handleTileClick);

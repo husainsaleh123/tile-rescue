@@ -681,13 +681,18 @@ footer{
 
         /*Styles the footer text*/
         footer{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             font-family: "Inter",sans-serif;
             font-size: 16px;
             font-weight: 350;
             text-align: center;
             color: white;
             margin-top: 20px;
-            padding: 20px 0;
+            padding: 15px 0;
+            z-index: 10000;
         }
 
                 
