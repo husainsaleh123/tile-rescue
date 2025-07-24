@@ -827,20 +827,20 @@ footer{
 
         /* Shrink tile size */
         .tile {
-                width: 48px;
-                height: 48px;
+                width: 45px;
+                height: 45px;
                 border-radius: 8px;
             }
 
             .tile-row {
-                grid-template-columns: repeat(5, 48px);
-                gap: 12px;
+                grid-template-columns: repeat(5, 45px);
+                gap: 10px;
             }
 
             .tile-board {
-                gap: 12px;
+                gap: 10px;
                 margin: 45px auto;
-                max-height: 340px;
+                max-height: 500px;
             }
 
         /* Trivia modal adjustments */
