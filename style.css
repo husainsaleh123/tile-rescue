@@ -534,10 +534,13 @@ footer{
     @media only screen and (max-width: 640px) {
         
         html, body {
-            /* Multiple background layers: gradient on top, image underneath */
-        background: 
-            linear-gradient(rgb(11, 16, 49, 0.75)),
-            url('images/background-img-3.jpg'); /* Replace with your image path */
+            height: 100%;
+            overflow-x: hidden;
+             -webkit-overflow-scrolling: touch;
+                /* Multiple background layers: gradient on top, image underneath */
+            background: 
+                linear-gradient(rgb(11, 16, 49, 0.75)),
+                url('images/background-img-3.jpg'); /* Replace with your image path */
         }
 
 
@@ -838,14 +841,14 @@ footer{
         }
 
         .tile-board {
-            gap: 10px;
-            margin: 45px auto;
-            max-height: 500px;
+            gap: 12px;
+            margin: 20px auto;
+            max-height: calc(100vh - 220px);
             padding: 10px 0;           /* Add padding to prevent clipping */
             overflow-y: auto;          /* Allow scroll instead of clipping */
-            box-sizing: content-box;   /* Ensure padding doesn't subtract from height */
+            box-sizing: border-box;   /* Ensure padding doesn't subtract from height */
         }
-        
+
         /* Trivia modal adjustments */
         .trivia-box {
             padding: 25px;
