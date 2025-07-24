@@ -827,22 +827,25 @@ footer{
 
         /* Shrink tile size */
         .tile {
-                width: 45px;
-                height: 45px;
-                border-radius: 8px;
-            }
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+        }
 
-            .tile-row {
-                grid-template-columns: repeat(5, 45px);
-                gap: 10px;
-            }
+        .tile-row {
+            grid-template-columns: repeat(5, 45px);
+            gap: 10px;
+        }
 
-            .tile-board {
-                gap: 10px;
-                margin: 45px auto;
-                max-height: 500px;
-            }
-
+        .tile-board {
+            gap: 10px;
+            margin: 45px auto;
+            max-height: 500px;
+            padding: 10px 0;           /* Add padding to prevent clipping */
+            overflow-y: auto;          /* Allow scroll instead of clipping */
+            box-sizing: content-box;   /* Ensure padding doesn't subtract from height */
+        }
+        
         /* Trivia modal adjustments */
         .trivia-box {
             padding: 25px;
