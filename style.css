@@ -80,7 +80,7 @@ html, body {
 
 /* Styling properties for the buttons themselves, the "Start Game" button AND the "Instructions" */ 
 .welcome-page-buttons button:hover{
-    background-color: #c2efbed5;
+    background-color: rgb(160, 190, 154)
 }
 
 
@@ -281,7 +281,7 @@ footer{
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); /* 80% black */
+  background-color: rgba(0, 0, 0, 0.75); /* 80% black */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -318,8 +318,9 @@ footer{
         justify-content: space-between;
         align-items: center;
         font-size: 30px;
-        font-weight: 400;
+        font-weight: 500;
         margin: 20px auto 20px;
+        text-shadow:  1px 1px #353535;
     }
 
     /*Styles the game's tile board*/
@@ -498,6 +499,8 @@ footer{
         font-size: 48px;
         margin-bottom: 40px;
         color: white;
+        font-family: 'Gome Pixel', sans-serif; 
+        font-weight: 300;
     }
 
     .end-stats p {
@@ -528,7 +531,7 @@ footer{
     }
 
     .game-over-btns button:hover {
-        background-color: rgb(202, 202, 202) ;
+        background-color: rgb(160, 190, 154) ;
     }
 
     @media only screen and (max-width: 640px) {
@@ -692,7 +695,7 @@ footer{
             color: white;
             margin-top: 20px;
             padding: 15px 0;
-            z-index: 10000;
+            z-index: 1;
         }
 
                 
@@ -796,10 +799,11 @@ footer{
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.6); /* 80% black */
+        background-color: rgba(0, 0, 0, 0.8); /* 80% black */
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 8888;
         }
 
         /* Countdown Number */
@@ -835,13 +839,13 @@ footer{
 
         /* Shrink tile size */
         .tile {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 8px;
         }
 
         .tile-row {
-            grid-template-columns: repeat(5, 45px);
+            grid-template-columns: repeat(5, 42px);
             gap: 10px;
         }
 

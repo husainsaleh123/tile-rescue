@@ -63,5 +63,22 @@
     <footer>
       Storm Lab 2025 &#169 all copyrights reserved.
     </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const isIndex = window.location.pathname.includes("index");
+    const musicEnabled = localStorage.getItem("musicEnabled") === "true";
+
+    if (isIndex && musicEnabled) {
+    setTimeout(() => {
+    mainMenuBackgroundMusic.volume = 0.25;
+    mainMenuBackgroundMusic.loop = true;
+    mainMenuBackgroundMusic.play().catch(err => {
+    console.warn("Autoplay failed:", err);
+    });
+         }, 100);
+         }
+     });
+  </script>
 </body>
 </html>

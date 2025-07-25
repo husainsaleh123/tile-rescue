@@ -275,7 +275,7 @@
       const musicToggle = document.getElementById("musicToggle"); //gets the score
       const sfxToggle = document.getElementById("sfxToggle");
       const backgroundMusic = new Audio("audio/background-music.mp3"); //selects background music audio
-      window.mainMenuBackgroundMusic = new Audio("audio/main-menu-music.mp3"); //selects background music audio  
+      const mainMenuBackgroundMusic = new Audio("audio/main-menu-music.mp3"); //selects background music audio  
       const swipeAudio = new Audio("audio/swipe.mp3");
       const rowHeight = 75; //tile 60px + gap 15px = 75px
       const greenAudio = new Audio("audio/green.mp3"); //selects green tile audio sf
@@ -1002,7 +1002,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         localStorage.setItem("musicEnabled", "false");
         backgroundMusic.pause();
-        if (window.mainMenuBackgroundMusic) {
+        if (mainMenuBackgroundMusic) {
           mainMenuBackgroundMusic.pause();
         }
       }
@@ -1011,13 +1011,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("click", function initAudioOnce() {
-  const musicEnabled = localStorage.getItem("musicEnabled") === "true";
-  if (musicEnabled) {
-    playBackgroundMusic();
-  }
+ const musicEnabled = localStorage.getItem("musicEnabled") === "true";
+if (musicEnabled) {
+playBackgroundMusic();
+}
 
-  // remove the event listener so this runs only once
-  document.removeEventListener("click", initAudioOnce);
+// remove the event listener so this runs only once
+ document.removeEventListener("click", initAudioOnce);
 }, { once: true });
 
 startCountdown();
