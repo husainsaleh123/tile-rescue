@@ -837,6 +837,23 @@ footer{
             gap: 15px;
         }
 
+        .gameOver{
+            position: fixed;
+            display: none;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: rgba(2, 0, 13, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            color: white;
+            font-family: "Inter", sans-serif;
+            z-index: 6666;
+    }
+
         /* Shrink tile size */
         .tile {
             width: 42px;
@@ -897,10 +914,10 @@ footer{
         .game-over-btns {
             flex-direction: column;
             gap: 12px;
+            width: 80%;
         }
 
         .game-over-btns button {
-            width: 90%;
             font-size: 18px;
         }
 
