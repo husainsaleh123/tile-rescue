@@ -23,11 +23,6 @@
               correct: "7"
             },
             {
-              question: "What is the capital of Spain?",
-              options: ["Sevilla", "Madrid", "Barcelona", "Bilbao"],
-              correct: "Madrid"
-            },
-            {
               question: "What is considered the best source of calcium?",
               options: ["Meat", "Rice", "Milk", "Bread"],
               correct: "Milk"
@@ -68,6 +63,11 @@
               correct: "Alaska"
             },
             {
+              question: "What is the role of Human Resources in a business?",
+              options: ["Managing finances", "Organizing meeting with clients", "Handling recruiting, training, and employees", "Monitoring competitors"],
+              correct: "Handling recruiting, training, and employees"
+            },
+            {
               question: "What nutrient is mainly found in fish?",
               options: ["Carbohydrate", "Protein", "Fat", "Fiber"],
               correct: "Protein"
@@ -77,6 +77,51 @@
               options: ["A dream disorder", "A memory problem", "An irrational fear", "Severe depression and anxiety"],
               correct: "An irrational fear"
             }, 
+            {
+              question: "Which body of water lies between Saudi Arabia and Africa?",
+              options: ["Red Sea", "Arabian Sea", "Atlantic Ocean", "Mediterranean Sea"],
+              correct: "Red Sea"
+            }, 
+            {
+              question: "Which athlete has won the most Olympic medals?",
+              options: ["Michael Phillips", "Usain Bolt", "Carl Lewis", "Ronnie Coleman"],
+              correct: "Michael Phillips"
+            },
+            {
+              question: "Which of the following countries has nuclear weapons?",
+              options: ["Iran", "North Korea", "Cuba", "Turkey"],
+              correct: "North Korea"
+            },
+            {
+              question: "What is gluten found in?",
+              options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
+              correct: "Wheat"
+            },
+            {
+              question: "Which macronutrient is the body's main source of energy?",
+              options: ["Carbohydrates", "Protein", "Fats", "Vitamins"],
+              correct: "Carbohydrates"
+            },
+            {
+              question: "As of 2025, what is the world's most populous country?",
+              options: ["India", "China", "United States", "Russia"],
+              correct: "India"
+            },
+            {
+              question: "What is a stakeholder?",
+              options: ["A client", "CEO", "Product tester", "Anyone affected by a business"],
+              correct: "Anyone affected by a business"
+            },
+            {
+              question: "What ocean is the largest",
+              options: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"],
+              correct: "Pacific Ocean"
+            },
+            {
+              question: "How many glasses of water (240 ml) are recommended daily?",
+              options: ["4", "6", "8", "10"],
+              correct: "8"
+            },
           ],
           medium: [
             {
@@ -90,9 +135,9 @@
               correct: "Inflation"
             },
             {
-              question: "Which of the following countries has nuclear weapons?",
-              options: ["Iran", "North Korea", "Cuba", "Turkey"],
-              correct: "North Korea"
+              question: "Which country is guilty of genocide, mass starvation, and crimes against humanity?",
+              options: ["Israel, but its not a country, its an occupation!", "Israel, but the land was promised to them 3000 years ago", "Israel, but its defening itself against Khamas and Iranian axis", "This question is anti-semitic, do better!"],
+              correct: "Israel, but its not a country, its an occupation!"
             },
             {
               question: "At what year did the Soviet Union collapse?",
@@ -105,25 +150,50 @@
               correct: "Mongol Empire"
             },
             {
+              question: "What is the main function of pancreas in digestion?",
+              options: ["Absorb nutrients", "Store fat", "Produce digestive enzymes and insulin", "Filter blood"],
+              correct: "Produce digestive enzymes and insulin"     
+            },
+            {
               question: "Which continent has the most number of countries?",
               options: ["Asia", "Africa", "Europe", "North America"],
               correct: "Africa"
             },
             {
+              question: "Which vitamin is important for blood clotting?",
+              options: ["Vitamin C", "Vitamin K", "Vitamin D", "Vitamin B"],
+              correct: "Vitamin K"
+            },
+            {
               question: "Which food is considered high in Vitamin C?",
               options: ["Orange", "Carrot", "Banana", "Tomato"],
               correct: "Orange"
-            },         
+            },        
+            {
+              question: "At what year did the Berlin wall collapse?",
+              options: ["1985", "1987", "1989", "1990"],
+              correct: "1989"
+            },    
              {
               question: "Between which two countries does the dead sea lie?",
               options: ["Palestine and Jordan", "Iraq and Jordan", "Syria and Jordan", "Lebanon and Jordan"],
               correct: "Palestine and Jordan"
-            },  
+            }, 
+            {
+              question: "Which city is located on two continents?",
+              options: ["Ankara", "Istanbul", "Moscow", "Nicosia"],
+              correct: "Istanbul"
+            },     
             {
               question: "At what year did the Titanic ship sink?",
               options: ["1910", "1912", "1914", "1918"],
               correct: "1912"
             },
+            {
+              question: "Which country has no rivers?",
+              options: ["Oman", "Jordan", "Kuwait", "Saudi Arabia"],
+              correct: "Saudi Arabia"
+            }, 
             {
               question: "What does the 'Big Five' model describe?",
               options: ["Mental Disorders", "IQ level", "Personality traits", "Memory strength"],
@@ -133,7 +203,12 @@
               question: "What mineral is the most abundant in bananas?",
               options: ["Iron", "Calcium", "Magnesium", "Potassium"],
               correct: "Potassium"
-            },    
+            },
+             {
+              question: "What is a purpose of a balance sheet?",
+              options: ["Summarizes profit and loss", "Summarize assets and liabilities", "Summarizes market share", "Summarizes customers total balance"],
+              correct: "Summarize assets and liabilities"
+            },               
             {
               question: "What country is the biggest oil exporter?",
               options: ["Kuwait", "Iraq", "Iran", "Saudi Arabia"],
@@ -150,6 +225,11 @@
               correct: "Hierachy of Needs"
             },
             {
+              question: "What is the most common business structure worldwide?",
+              options: ["Partnership", "Corporation", "Sole Trader", "Franchise"],
+              correct: "Sole Trader"
+            },         
+            {
               question: "What is the name of the famous drug-lord who escaped prison and went in hiding for 13 years?",
               options: ["Pablo  Escobar", "Joaquín 'El Chapo' Guzmán", "Arturo Beltran Leyva", "Miguel Gallardo"],
               correct: "Joaquín 'El Chapo' Guzmán"
@@ -164,11 +244,6 @@
               options: ["YouTube", "Instagram", "Facebook", "Twitter"],
               correct: "Facebook"
             },
-            {
-              question: "What is gluten found in?",
-              options: ["Corn", "Rice", "Wheat", "Mashed potatoes"],
-              correct: "Wheat"
-            },
              {
               question: "What arab country is part of the original founding UN members?",
               options: ["Saudi Arabia", "Iraq", "Syria", "All options are correct"],
@@ -182,9 +257,24 @@
               correct: "Uruguay"
             },
             {
+              question: "Which two countries share the longest international land border?",
+              options: ["Russia & China", "Chile & Argentina", "Canada & USA", "Brazil & Argentina"],
+              correct: "Canada & USA"
+            },
+            {
+              question: "Which part of the body absorbs the most nutrients?",
+              options: ["Stomach", "Liver", "Small Intestine", "Large Intestine"],
+              correct: "Small Intestine"
+            },
+            {
               question: "Which particle has no charge but significant mass?",
               options: ["Proton", "Neutron", "Electron", "Positron"],
               correct: "Neutron"
+            },
+            {
+              question: "How many states are there in continental United States of America?",
+              options: ["48", "49", "50", "51"],
+              correct: "48"
             },
             {
               question: "Which cooking oil is considered to be healthiest for the heart?",
@@ -193,13 +283,23 @@
             },
             {
               question: "Which country was the first to adapt Bitcoin as a legal tender?",
-              options: ["Iran", "Mexico", "El Salvador", "Switzerland"],
+              options: ["United States", "Mexico", "El Salvador", "Switzerland"],
               correct: "El Salvador"
             },
             {
               question: "What is a main feature of capitalism?",
               options: ["Price Control", "Central Planning", "Equal Distribution", "Private Ownership"],
               correct: "Private Ownership"
+            },
+            {
+              question: "Which law states that total energy in an isolated system remains constant?",
+              options: ["Newton’s Second Law", "Conservation of Energy", "Ohm’s Law", "Thermodynamics Zeroth Law"],
+              correct: "Conservation of Energy"
+            },
+            {
+              question: "Which of these minerals is important for oxygen transport in the blood?",
+              options: ["Calcium", "Potassium", "Iron", "Sodium"],
+              correct: "Iron"
             },
             {
               question: "What is a common tool used by banks to control inflation",
@@ -210,11 +310,6 @@
               question: "As of 2025, which nation is ranked as the world's most corrupt country?",
               options: ["South Sudan", "Syria", "Somalia", "Venezuela"],
               correct: "South Sudan"
-            },
-             {
-              question: "As of 2025, what is the world's most populous country?",
-              options: ["India", "China", "United States", "Russia"],
-              correct: "India"
             },
             {
               question: "What is the storage form of glucose in animals?",
@@ -232,8 +327,13 @@
               correct: "Amygdala"
             },
             {
+              question: "What is the smallest unit of life?",
+              options: ["Molecule", "Atom", "Cell", "Organ"],
+              correct: "Cell"
+            },
+            {
               question: "When it comes to finance, what does liquidity mean?",
-              options: ["How much an asset depreciates.", "Ability of a firm to meet it's long-term obligations.", "Profitability of an asset over time.", "How easy an asset can be converted to cash."],
+              options: ["How much an asset depreciates.", "Ability of meeting long-term obligations.", "Profitability of an asset over time.", "How easy an asset can be converted to cash."],
               correct: "How easy an asset can be converted to cash."
             },
             {

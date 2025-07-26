@@ -1,9 +1,3 @@
-
-
-/*body{
-    height: 100%;
-}*/
-
 @font-face {
   font-family: 'Gome Pixel';
   src: url('../fonts/gome-pixel/GomePixel-ARJd7.otf') format('opentype');
@@ -285,6 +279,7 @@ footer{
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
 /* Countdown Number */
@@ -319,8 +314,69 @@ footer{
         align-items: center;
         font-size: 30px;
         font-weight: 500;
-        margin: 20px auto 20px;
-        text-shadow:  1px 1px #353535;
+        margin: 0 auto 30px;
+        padding: 0 20px;
+        text-shadow: 1px 1px #353535;
+        z-index: 0;
+    }
+
+    /* Container block for each info piece */
+    .info-block {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+        flex-shrink: 0;    
+    }
+
+    /* Center the timer in the middle */
+    #time {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* ✅ CHANGED: #lives */
+    #lives {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-width: 220px;           /* ⬅️ Increased from 200px to give enough fixed space */
+        max-width: 500px;
+        gap: 0;                     /* ⬅️ Set to 0, spacing handled via margin-left in #hearts */
+        flex-shrink: 0;
+        white-space: nowrap;
+        
+    }
+
+    .lives-label {
+        position: absolute;
+        left: 0;                   
+        white-space: nowrap;
+        width: 70px;
+        text-align: right;
+        flex-shrink: 0;
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    #hearts {
+        margin-left: 80px;        
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 28px;
+        line-height: 1;
+        flex-shrink: 1;
+        overflow: hidden;
+        flex-wrap: nowrap;
+        flex-grow: 1;
+        min-width: 0;
+        text-overflow: ellipsis;
     }
 
     /*Styles the game's tile board*/
@@ -334,18 +390,6 @@ footer{
         overflow: hidden;
         margin: 40px auto;
     }
-
-        /*
-        grid-template-columns: repeat(5, 60px); 
-        grid-auto-rows: 60px;
-        height: 350px;;
-        gap: 15px;
-        margin: 50px auto 20px;
-        max-width: max-content;
-        padding: 15px; optional: spacing inside 
-        border-radius: 10px;
-    }*/
-
 
     /*Styles the property of the tile itself*/
     .tile {
@@ -377,20 +421,6 @@ footer{
         background-color: #3498db; 
     }
 
-
-    /*Trivia styling*/
-
-    /*
-    .trivia-modal{
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background-color: #f1f1f1;
-        
-        justify-content: center;
-        align-items: center;
-        margin: 40px auto;
-    }*/
 
     .trivia-modal {
         position: fixed;
@@ -447,15 +477,15 @@ footer{
 
 
     .trivia-options .option {
-    background-color: #4e5d94;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+        background-color: #4e5d94;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
     .trivia-options .option{
@@ -545,7 +575,6 @@ footer{
                 linear-gradient(rgb(11, 16, 49, 0.75)),
                 url('images/background-img-3.jpg'); /* Replace with your image path */
         }
-
 
 
        /*Styling the welcome screen*/
@@ -677,7 +706,7 @@ footer{
             text-align: center;
             font-family: "Inter",sans-serif;
             font-weight: 500;
-            font-size: 36px;
+            font-size: 30px;
             color: white;
             margin-top: 50px;
         }
@@ -689,8 +718,8 @@ footer{
             left: 0;
             width: 100%;
             font-family: "Inter",sans-serif;
-            font-size: 16px;
-            font-weight: 350;
+            font-size: 13px;
+            font-weight: 400;
             text-align: center;
             color: white;
             margin-top: 20px;
@@ -790,29 +819,30 @@ footer{
         cursor: not-allowed;
         }
 
+
         /*Styling the countdown in the game page*/
 
         /* Black Countdown background Fullscreen Overlay */
         #counter {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.8); /* 80% black */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 8888;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8); /* 80% black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
 
         /* Countdown Number */
         #countdownNum {
-        color: white;
-        font-size: 120px;
-        font-weight: 600;
-        font-family: "Inter", sans-serif;
-        animation: pop 1s ease-in-out;
+            color: white;
+            font-size: 120px;
+            font-weight: 600;
+            font-family: "Inter", sans-serif;
+            animation: pop 1s ease-in-out;
         }
 
 
@@ -829,12 +859,52 @@ footer{
             margin: 50px auto 25px;
         }
 
-        /* Stacks the game information vertically*/
         .game-info {
             flex-direction: column;
-            font-size: 20px;
-            text-align: center;
+            align-items: center;
+            justify-content: center;
             gap: 15px;
+            font-size: 22px;
+            padding: 0 5px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Mobile: Remove absolute timer centering and let flexbox do it */
+        #time {
+            position: static;
+            transform: none;
+            margin: 0 auto;
+        }
+
+        /* Mobile: Lives container center fix */
+        #lives {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Mobile: Label gets normal positioning (no absolute), aligned left */
+        .lives-label {
+            position: static;
+            width: auto;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        /* Mobile: Hearts follow naturally and align left of label */
+        #hearts {
+            margin-left: 0;
+            display: flex;
+            gap: 5px;
+            font-size: 24px;
+            flex-grow: 0;
+            overflow: hidden;
+            min-width: 0;
+            line-height: 1;
         }
 
         .gameOver{
@@ -902,8 +972,8 @@ footer{
 
         /* Game Over screen */
         .end-stats h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
+            font-size: 48px;
+            margin-bottom: 40px;
         }
 
         .end-stats p {
@@ -913,8 +983,8 @@ footer{
 
         .game-over-btns {
             flex-direction: column;
-            gap: 12px;
-            width: 80%;
+            gap: 13px;
+            width: 70%;
         }
 
         .game-over-btns button {
